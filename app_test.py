@@ -20,6 +20,8 @@ class Test(unittest.TestCase):
         response = self.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertIn("Mikel's Home Page", response.data)
+        self.assertIn('view my <a href="/resume">resume</a>', response.data)
+        self.assertIn('<a href="/contact">contact me</a>', response.data)
 
     def testAbout(self):
         response = self.get('/about')
