@@ -1,0 +1,36 @@
+#menu { background-color: #5FA6D9; color: #FFFFFF }
+#menu { padding: 0; margin: 0; border: 1px solid gray }
+
+#menu { position: relative; top: 0; left: 0 }
+#search { position: absolute; top: -0.2em; right: 0em; /*margin: 0px; padding: 0px*/ }
+#searchbutton { background-color: rgb(220,220,220) }
+
+/** OLD CODE BELOW HERE **/
+/*
+ * Menu is a row of gray tabs which become white when moused over.
+ * Currently only supports two-level menus.
+ * Firefox and Opera place a word space between each tab since they're words in inline content,
+ * but Internet Explorer doesn't.  There's no ideal way I can find to handle this.
+ */
+#menu { border-bottom: 1px solid black; margin-top: 1px }
+#menu * { display: inline }
+#menu a, #menu :link { text-decoration: none; color: #FFFFFF; padding: 0px 2px }
+#menu ul { margin: 0px; padding: 0px }
+#menu li.submenu { margin-left: 3px }
+#menu li.menuitem, #menu li.current { /*border: 1px solid black;*/ padding: 0px 0px; margin: 0px 2px }
+#menu * > li.menuitem, #menu * > li.current { /*border: 1px solid black;*/ padding: 0px 0px; margin: 0px 0px }
+#menu li.menuitem:hover, #menu li.current:hover { background-color: white }
+#menu li.menuitem { /*background-color: rgb(220,220,220);*/ border-bottom: none }
+#menu li.current { background-color: white; border-bottom: 1px solid white }
+
+#title { padding: 0em 1em; }
+#title h1 { margin-bottom: 0 }
+#crumb { padding-left: 0.5em }
+#content { padding: 0em 1em; margin: 0em 1em; }
+
+th { background-color: rgb(220,220,220) }
+/*
+table .odd { background-color: rgb(255,255,255) }
+table .even { background-color: rgb(240,240,240) }
+*/
+

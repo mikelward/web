@@ -1,0 +1,48 @@
+/*
+ * menu-toptable.css
+ * StyleSheet to show main navigation menu as a row of tabs
+ *
+ * Michael Wardle
+ * April 28, 2005
+ */
+
+/*
+ * Menu is a row of gray tabs which become white when moused over.
+ * Currently only supports two-level menus.
+ * Most browsers apply word spacing to all inline elements, so this
+ * separates tabs.  Use a margin instead for Internet Explorer.
+ * The line box's height in Internet Explorer causes the menu's bottom
+ * border to become detached from the tabs when the active tab's text
+ * is emboldened, so hide that rule from Internet Explorer.
+ * FIXME - Mozilla 1.8/Firefox 1.1 exhibits a similar behavior.
+ * For some reason, Opera applies the nowrap whitespace setting to the
+ * entire linebox rather than per-submenu.
+ */
+body { display: block; position: absolute; left: 0; right: 0; }
+#menu { display: table; position: relative; left: 0; right: 0; width: 100%;
+	z-index: 0; margin: 1px 0px 0px 0px;
+	border-bottom: 1px solid black; border-collapse: collapse }
+#menu a, #menu :link { text-decoration: none; color: black }
+#menu ul, #menu li { list-style: none; margin: 0px; padding: 0px }
+#menu ul { display: table-row }
+#menu li { display: table-cell }
+#menu li { word-spacing: normal }
+#menu li.submenu { margin-left: 3px; white-space: nowrap }
+#menu li.menuitem { padding: 0px 2px; margin: 0px 2px }
+#menu * > li.menuitem { margin: 0px }
+#menu li.menuitem { border: 1px solid black;
+                    color: black; background-color: rgb(220,220,220) }
+#menu li.menuitem:hover { color: black; background-color: white }
+#menu li.current { border: 1px solid black;
+                   color: black; background-color: white }
+
+#title { padding: 0em 1em; margin: 0em; }
+#title h1 { padding-bottom: 0; margin-bottom: 0 }
+#content { padding: 0em 1em; margin: 0em 1em; }
+
+#footer { display: none }
+
+#menu table { border: 1px solid black }
+#menu th { color: black; background-color: rgb(220,220,220);
+     border-bottom: 1px solid black }
+

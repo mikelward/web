@@ -1,0 +1,57 @@
+/*
+ * menu-sidebar-absolute.css
+ * StyleSheet to show menu as side bar
+ * Absolute/Fixed Variant: Fixes the menu to the same place when scrolling
+ *
+ * Michael Wardle
+ * November 7, 2004
+ */
+
+th { color: black; background: rgb(220,220,220); }
+
+/*
+ * Links have no decoration (disables underlining of link text)
+ */
+:link, :visited { text-decoration: none; }
+
+/*
+ * Menu is a gray box with a black border in the top left corner of the page.
+ * The menu box stays fixed in position while the page content is scrollable
+ * in supported browsers.
+ * All menu items are always visible.
+ * Menus are constructed from unordered lists with menu entries being
+ * list items.
+ */
+#menu { position: absolute; width: 8em; top: 1em; left: 1em;
+        padding: 0em; margin: 0em;
+        border: 1px solid black;
+        color: black; background-color: rgb(220,220,220); }
+body > #menu { position: fixed }
+#menu ul { list-style: none; padding: 0em; margin: 0em 0.5em; }
+#menu li.submenu { font-weight: bolder }
+#menu li.menuitem, #menu li.current { font-weight: normal }
+#menu li.current { font-style: italic }
+
+/*
+ * Place the title at the top of the page to the right of the menu.
+ */
+#title { position: absolute; top: 1em; left: 10em; right: 1em;
+         padding: 0.5em 0em; }
+#title h1 { margin: 0em }
+
+/*
+ * Place main page content below the title and right of the menu.
+ * Allow some room on the right to minimize scrollbar problems.
+ */
+#content { position: absolute; top: 4em; left: 10em; right: 1em;
+           padding: 0em; margin: 0em; padding-right: 1em; }
+
+
+/*
+ * Fix the footer to the bottom left corner under the menu in supported
+ * browsers, otherwise don't show it.
+ */
+#footer { display: none }
+* > #footer { display: block; position: fixed;
+              left: 1em; bottom: 1em; width: 80px; }
+

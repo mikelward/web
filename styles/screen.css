@@ -1,0 +1,51 @@
+/*
+ * screen.css
+ *
+ * StyleSheet for use with screen devices
+ *
+ * Mikel Ward <mikel@mikelward.com>
+ *
+ * $Id: screen.css 1768 2009-02-04 12:02:21Z mikelward $
+ */
+
+#menu { font-family: sans-serif; }
+input { font-family: sans-serif; }
+body, p, td, ul, li, dl, dd, dt { font-family: sans-serif }
+body, p, td, ul, li, dl, dd, dt { line-height: 140%; word-spacing: 0.005em }
+/*{ line-height: 100%; word-spacing: 0em }*/
+h1,h2,h3,h4,h5,h6 { font-family: sans-serif; line-height: 140%; word-spacing: -0.01em }
+
+input { font-size: 100% }
+input[type=text] { max-width: 20em }
+
+a:link { color: blue; }
+a:visited { color: blue; }
+a:active, a:focus, a:hover { color: green; }
+:link, :visited { text-decoration: none; }
+a.unavailable { text-decoration: line-through; cursor: not-allowed; }
+
+p { max-width: 42em }
+#banner p { max-width: none }
+
+#title { padding: 0em 1em; margin: 0em }
+#content { padding: 0em 1em; margin: 0em } /* main division of page */
+#footer { padding: 1em }
+#sections a { padding-right: 0.5em; }
+
+.collapsible h2, .collapsible h3, .collapsible h4, .collapsible h5, .collapsible h6 { cursor: pointer; cursor: hand }
+
+#search form { padding: 0; margin: 0 }
+#search p { padding: 0; margin: 0 }
+
+/*
+ * Weird things happen to the width of a text input field when its font is Lucida Grande.
+ * Explicitly set the width to 10 ems here to avoid this.
+ */
+#searchfield { width: 10em }
+
+/*
+ * Display a message to users of old browsers that the site looks better in newer browsers.
+ * We do it here so it doesn't affect peeple with no option (e.g. screen readers, mobile phones)
+ * don't see the message.
+ */
+#upgrade { display: block }

@@ -1,0 +1,12 @@
+/*
+ * print.css - StyleSheet for use on printer devices
+ * Mikel Ward <mikel@mikelward.com>
+ * $Id: print.css 1168 2007-05-02 03:49:23Z  $
+ */
+
+/* don't print the header, navigation links, or footer */
+#banner, #header, #skip, #menu, #crumb, #footer, #upgrade, #sections { display: none }
+
+/* disable underlining of acronyms and abbreviations */
+abbr, acronym { text-decoration: none; border-bottom: none }
+

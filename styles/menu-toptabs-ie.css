@@ -1,0 +1,5 @@
+/*
+ * These settings seem to make Internet Explorer work better,
+ */
+#search { top: -6px }
+#searchbutton { font-size: 80%; padding: 1px }

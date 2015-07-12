@@ -1,0 +1,66 @@
+/*
+ * menu-topbar-dynamic.css
+ * StyleSheet to show menu as a bar
+ * Dynamic variant: Submenus are shown when moused over
+ *
+ * Michael Wardle, November 6, 2004
+ */
+
+/*
+ * Page has a narrow margin on each side.
+ */
+body { margin: 0.5em 1em; }
+
+/*
+body { font-family: sans-serif; }
+p { font-family: serif; }
+*/
+
+/*
+ * Menu is a filled horizontal bar with buttons.
+ */
+#menu { position: relative; top: 0.5em; height: 2em; left: 1em; right: 1em; z-index: 1;
+        border-top: 1px solid black; border-bottom: 1px solid black; _width: 100%; background: white }
+* > #menu { position: fixed }
+#menu :link, #menu :visited { color: black }
+#menu ul { display: block; padding: 0px; margin: 0.5em; }
+#menu li { display: inline; color: black; background-color: white; list-style: none; padding-left: 0.25em; padding-right: 0.25em }
+
+#title { position: absolute; top: 3em; left: 1em; right: 1em; padding: 0em 1em }
+#title h1 { margin-bottom: 0 }
+#title h1 { display: none }
+#crumb { display: none }
+
+#content { position: relative;
+           top: 3em; left: 1em; bottom: 1em; right: 1em;
+           /*top: 6em; left: 1em; bottom: 1em; right: 1em;*/
+           /*top: 7em; left: 1em; bottom: 1em; right: 1em;*/
+           padding: 0em 1em; z-index: 0 }
+
+/*
+ * The positioning of the search box is done by trial and error.
+ * It ends up somewhere different in every browser, but these are the best values I have been able to find.
+ */
+#search { position: absolute; top: 0em; right: 0.5em; margin: 0.3em }
+#search p { margin: 0 }
+#search input { margin: 0 }
+#searchbutton { position: absolute; right: 11em; background-color: white; border: 2px solid white }
+#searchfield { position: absolute; right: 0.5em; width: 10em; border: 1px solid black }
+
+/* 
+ * Footer is a gray horizontal bar with a black border at the bottom of the
+ * page.
+ * Anchors aren't the same size as the image they contain in CSS, so have to
+ * fix the height of the footer bar to the height of the logo images for a
+ * consistent effect in all browsers.
+ * Hide the footer in Internet Explorer as it doesn't position it right.
+ */ 
+#footer { position: fixed; z-index: 1; height: 15px;
+          bottom: 1em; left: 1em; right: 1em;
+          padding: 0em; margin: 0em;
+          background-color: rgb(220,220,220);
+          border-top: 2px solid black; border-bottom: 2px solid black; }
+#footer { display: none }
+
+th { color: black; background-color: rgb(220,220,220) }
+

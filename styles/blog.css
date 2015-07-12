@@ -1,0 +1,201 @@
+/**
+ * CSS Style Sheet for my Blogger blog.
+ * Mikel Ward <mikel@mikelward.com>
+ *
+ * Inspired by Minima by Douglas Bowman <http://www.stopdesign.com>
+ */
+
+#previous {
+  /*display: none;*/
+}
+
+#categories {
+  /*display: none;*/
+}
+
+h2 {
+  margin-top: 0
+}
+
+/* each post has 1em padding, which makes the first post look too far down... */
+#main { margin-top: -1em }
+#sidebar { margin-bottom: 1em; line-height: 130%; word-spacing: -0.01em }
+@media print
+{
+  #sidebar {
+    display: none;
+  }
+
+  /*
+  h2 {
+    page-break-before: always;
+  }
+  */
+
+  .post {
+    page-break-after: always;
+  }
+}
+
+.blog-list {
+  padding-top: 1em;
+  list-style-type: none;
+}
+
+.blog-link {
+  font-size: larger;
+  margin: none;
+}
+
+.post-body > div > div {
+  clear: none !important;
+}
+
+.date-header {
+}
+
+.post {
+  padding: 1em 0em;
+}
+.post-title {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.post-date {
+  padding-top: 0;
+  margin-top: 0;
+}
+.post-title a, .post-title a:visited, .post-title a:hover .post-title strong {
+  display: block;
+  text-decoration: none;
+  color: #c60;
+}
+.post div {
+  /*
+  margin: 0 0 .75em;
+  line-height: 1.6em;
+  */
+}
+.post-body {
+  padding-top: 1em;
+  line-height: 140%;
+  word-spacing: 0.005em;
+}
+
+p.post-footer {
+  color: #ccc;
+}
+.post-body img {
+  padding: 4px;
+  display: block;
+  margin: 0px auto;
+  border: 1px solid #ddd;
+}
+.post-body .figure {
+  width: 100%;
+}
+.post-body .caption {
+  padding: none;
+  text-align: center;
+  font-size: small;
+  margin-left: auto;
+  margin-right: auto;
+}
+.post blockquote {
+  margin: 1em 20px;
+}
+.post blockquote p {
+  margin: .75em 0;
+}
+
+/* more margin for labels than the post-footer because
+ * the blog body doesn't use paragraphs, but the labels do,
+ * thus there's padding at the bottom*/
+ /*
+  * 
+  */
+.blogger-labels {
+  display: none;
+  margin-top: 1.0em;
+  padding-bottom: none;
+}
+
+.post-footer {
+  margin-top: 1em;
+}
+
+#comments {
+  padding: 0em 0em;
+}
+#comments h3 {
+  margin: 1em 0;
+}
+.deleted-comment {
+  font-style: italic;
+  color: gray;
+}
+
+#sidebar { width: 14em }
+#sidebar h2, #sidebar h3 { width: 12em; border-bottom: 1px solid gray }
+#sidebar ul {
+  margin: 0 0 1.5em;
+  padding: 0 0 1.5em;
+  border-bottom: 1px dotted #ccc;
+  list-style: none;
+}
+#sidebar li {
+  margin: 0;
+  padding: 0 0 .25em 15px;
+  text-indent: -15px;
+  line-height: 1.5em;
+}
+#sidebar p {
+  color: #666;
+  line-height: 1.5em;
+}
+#sidebar #archives a {
+  display: block;
+}
+
+img.wp-smiley {
+  display: inline;
+  border: none;
+}
+
+#comments, #postcomment {
+  margin-top: 1em;
+}
+
+.comment {
+  background: #f5f5f5;
+  margin-top: 1em;
+  width: 56em;
+}
+
+div.author {
+  margin-left: 1em;
+  background: #ffffff;
+}
+
+.avatar {
+  float: left;
+  border: none !important;
+}
+
+.commenttext {
+  //margin-left: 50px;
+}
+
+.citation {
+  //margin-left: 1em;
+  //margin-left: 50px;
+}
+
+.citation cite {
+  font-style: normal !important;
+}
+
+
+.rpx_comment_hint img { display: inline; border: none }
+
+.feedback { margin-top: 1em }

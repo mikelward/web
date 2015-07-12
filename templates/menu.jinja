@@ -1,0 +1,5 @@
+{% set current_path = path %}
+{% for name, path in menu_items -%}
+{% set current = path == current_path -%}
+<li class="{% if current %}current {% endif %}menuitem"><a href="{{path}}">{{name}}</a></li>
+{% endfor %}

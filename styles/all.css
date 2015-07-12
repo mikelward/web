@@ -1,0 +1,34 @@
+/*
+ * all.css
+ *
+ * Style sheet for use with all devices
+ *
+ * Mikel Ward <mikel@mikelward.com>
+ *
+ * $Id: all.css 1785 2009-02-27 04:33:43Z mikelward $
+ */
+
+body { background: #ffffff; color: #000000; font-family: sans-serif }
+p { font-family: sans-serif }
+h1, h2, h3, h4, h5, h6 { font-family: sans-serif }
+h1 { font-size: large; font-weight: bold }
+h2 { font-size: medium; font-weight: bold }
+h3 { font-size: medium; font-weight: bold  }
+h4 { font-size: small; font-weight: bold  }
+h5 { font-size: small; font-weight: bold  }
+h6 { font-size: x-small; font-weight: bold  }
+h1 { margin: 0.6em 0em 0em 0em }
+h2 { margin: 0.5em 0em 0em 0em }
+h3 { margin: 0.4em 0em 0em 0em }
+h4 { margin: 0.35em 0em 0em 0em }
+h5 { margin: 0.3em 0em 0em 0em }
+h6 { margin: 0.25em 0em 0em 0em }
+
+img { border: none }
+acronym { font-variant: small-caps }
+
+#menu { font-family: sans-serif; }
+
+#title h1 { margin: 0.6em 0 }
+
+:link, :visited { white-space: nowrap }

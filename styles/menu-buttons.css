@@ -1,0 +1,31 @@
+/*
+ * menu-buttons.css - StyleSheet to show top menu as buttons
+ * Michael Wardle, November 7, 2004
+ */
+
+/*
+ * Menu is a row of gray buttons.  Buttons become white when moused over.
+ * Currently only supports two-level menus.
+ */
+#menu { display: block; margin-top: 1px }
+#menu a, #menu :link { text-decoration: none; color: black }
+#menu ul { display: inline; margin: 0px; padding: 0px }
+#menu li { display: inline; list-style: none; line-height: 150% }
+#menu li.submenu { margin-left: 3px; /*white-space: nowrap*/ }
+#menu li.menuitem, #menu li.current { padding: 0px 2px; margin: 0px 2px }
+#menu * > li.menuitem, #menu * > li.current { margin: 0px 0px }
+#menu li.menuitem { border: 1px outset black;
+		    color: black; background-color: rgb(220,220,220) }
+#menu li.menuitem:hover { color: black; background-color: white }
+#menu li.current { border: 1px inset black;
+                   color: black; background-color: darkgray }
+#menu li.current { font-weight: bolder }
+
+#title { padding: 0em 1em; }
+#content { /*border: 1px solid black;*/
+           padding: 0em 1em; margin: 0em 1em; }
+
+#footer { display: none; }
+
+th { color: black; background-color: rgb(220,220,220) }
+

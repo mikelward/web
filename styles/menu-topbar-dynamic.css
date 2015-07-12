@@ -1,0 +1,66 @@
+/*
+ * menu-topbar-dynamic.css
+ * StyleSheet to show menu as a bar
+ * Dynamic variant: Submenus are shown when moused over
+ *
+ * Michael Wardle, November 6, 2004
+ */
+
+/*
+ * Page has a narrow margin on each side.
+ */
+body { margin: 0.5em 1em; }
+
+/*
+body { font-family: sans-serif; }
+p { font-family: serif; }
+*/
+
+/*
+ * Menu is a gray horizontal bar with a black border at the top of the page.
+ * top level menus are always visible, sub menus are collapsed and indicated
+ * by an arrow which expands when moused over.
+ * Always show sub menus in MSIE <= 6.0 because it doesn't support hover on
+ * arbitrary elements (hide the extra rules from it using child selectors).
+ * menus are constructed from unordered lists, with menu entries being
+ * list items.  Sub menus are lists within lists.
+ */
+#menu { position: absolute; top: 0.5em; left: 1em; right: 1em; z-index: 1;
+	border-bottom: 2px solid black;
+        color: black; background-color: rgb(220,220,220); }
+* > #menu { position: fixed }
+#menu ul { display: inline; padding: 0px; margin: 5px }
+#menu li { display: inline; list-style: none;
+           /*background-color: transparent*/ }
+#menu li.submenu { font-weight: bolder; white-space: nowrap }
+#menu li.menuitem, #menu li.current { font-weight: normal }
+#menu > ul > li.submenu:after { content: "> "; }
+#menu > ul > li.submenu:hover:after { content: ""; }
+#menu > ul > li > ul { padding: 0px; margin: 0px; }
+#menu > ul > li > ul { display: none; }
+#menu > ul > li:hover > ul { display: inline; }
+
+#title { position: absolute; top: 2em; left: 1em; right: 1em; padding: 0em 1em }
+#content { position: absolute;
+           /*top: 5em; left: 2em; bottom: 1em; right: 1em;*/
+           top: 6em; left: 1em; bottom: 1em; right: 1em;
+           /*top: 7em; left: 1em; bottom: 1em; right: 1em;*/
+           padding: 0em 1em }
+
+/* 
+ * Footer is a gray horizontal bar with a black border at the bottom of the
+ * page.
+ * Anchors aren't the same size as the image they contain in CSS, so have to
+ * fix the height of the footer bar to the height of the logo images for a
+ * consistent effect in all browsers.
+ * Hide the footer in Internet Explorer as it doesn't position it right.
+ */ 
+#footer { position: fixed; z-index: 1; height: 15px;
+          bottom: 1em; left: 1em; right: 1em;
+          padding: 0em; margin: 0em;
+          background-color: rgb(220,220,220);
+          border-top: 2px solid black; border-bottom: 2px solid black; }
+#footer { display: none }
+
+th { color: black; background-color: rgb(220,220,220) }
+

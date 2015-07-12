@@ -1,0 +1,97 @@
+* { padding: 0; margin: 0 }
+html { background-color: #eeeeee }
+/*
+ * Make Chrome always show the scrollbar so page layout doesn't suddenly change
+ * if a page becomes longer than one screenful.
+ */
+html { overflow-y: scroll }
+
+/*p { padding-top: 1em }*/
+dl { padding-top: 0.5em; padding-bottom: 0.5em }
+dd { padding-left: 2em }
+li { margin-left: 1.5em }
+
+table { margin-top: 0.5em; margin-bottom: 0.5em }
+
+p { padding-top: 0.5em; padding-bottom: 0.5em }
+ul, ol { padding-bottom: 0.5em }
+p + ul, p + ol { margin-top: 0em }
+
+fieldset { padding: 0.5em }
+
+h1 { font-size: large; text-transform: uppercase }
+h2 { font-size: medium; text-transform: uppercase }
+h3 { font-size: medium; text-transform: uppercase }
+h4 { font-size: small; text-transform: uppercase }
+h5 { font-size: small; text-transform: uppercase }
+h6 { font-size: x-small; text-transform: uppercase }
+
+input { padding: auto; -moz-box-sizing: content-box }
+
+#skip { display: none }
+
+#banner { position: relative; z-index: 1; left: 0; right: 0; height: 4em; }
+#banner { background-color: #5FA6D9; color: #FFFFFF }
+#banner #sitename { padding-top: 1em; padding-bottom: 0; font-size: large; text-transform: uppercase; text-align: center }
+#banner #siteslogan { font-size: x-small; text-transform: uppercase; text-align: center; padding-top: 0 }
+#banner a, #banner :link { color: #FFFFFF; text-decoration: none }
+#banner a:hover, #banner :link:hover { color: #000000 }
+#banner h1 { margin-top: 0; font-weight: normal }
+
+/*
+ * Menu is a row of undecorated uppercase white words acting as links.
+ */
+#menu { position: relative; z-index: 2; left: 0; right: 0; padding-left: 1em; padding-right: 5em }
+#menu { padding-top: 1px; padding-bottom: 1px }
+#menu { background-color: #5FA6D9; color: #000000; border-bottom: 1px solid gray; border-top: 1px solid gray }
+#menu { margin-top: 0px }
+#menu * { display: inline }
+#menu a, #menu :link { text-decoration: none; text-transform: uppercase; color: #FFFFFF; padding: 0px 2px }
+#menu a:hover, #menu :link:hover { color: #000000 }
+/*#menu a:hover, #menu :link:hover { text-decoration: underline }*/
+#menu ul { margin: 0px; padding: 0px }
+#menu li.submenu { margin-left: 3px }
+#menu li.menuitem, #menu li.current { padding: 0px 0px; margin: 0px 2px }
+#menu * > li.menuitem, #menu * > li.current { padding: 0px 0px; margin: 0px 0px }
+#menu li.current a { /*border-bottom: 1px solid red*/ text-decoration: underline }
+/*#menu li.current { font-weight: bolder }*/
+
+//#search { position: absolute; bottom: 0.0em; right: 1em; z-index: 1 }
+//#searchbutton { background-color: #DCDCDC /* gainsboro */; color: #000000 /* black */;
+  text-transform: uppercase; border: 1px solid #DCDCDC }
+//#searchfield { width: 8em }
+/* these work well for Gecko and WebKit but not MSIE, see -msie.css for IE override */
+//#searchbutton, x:-moz-any-link { padding: 0px }
+//#searchfield, x:-moz-any-link { border: none; padding: 2px }
+
+/*#title { display: none }*/
+#title { position: relative; left: 0; right: 0 }
+#title { padding: 1em 1em; }
+#title h1 { margin-bottom: 0; margin-top: 0 }
+/*#crumb { padding-left: 0.5em }*/
+#crumb { display: none }
+/*#title h1 { display: none }*/
+/*#crumb { position: absolute; top: 6pt; left: 3px; right: auto }*/
+#crumb { text-transform: uppercase }
+/*#crumb { border-bottom: 1px solid #eeeeee; border-top: 1px solid #eeeeee }*/
+/*#crumb { border-bottom: 1px solid #DCDCDC }*/
+
+body { background-color: #FFFFFF; color: #000000 }
+
+#content { position: relative }
+#content { padding: 0em 2em 1em 2em; margin: 0 } /* 0 padding at top because common elements such as p have top margin/padding */
+
+th { background-color: #DCDCDC /* gainsboro */ }
+/*
+table .odd { background-color: rgb(255,255,255) }
+table .even { background-color: rgb(240,240,240) }
+*/
+
+#main { position: relative; padding: 0; max-width: 42em }
+#sidebar { width: 14em; float: right }
+#sidebar h2, #sidebar h3 { width: 15em; border-bottom: 1px solid gray }
+#sidebar h2 :link, #sidebar h2 :visited, #sidebar h3 :link, #sidebar h3 :visited { color: black }
+#sidebar li { list-style: none }
+
+#footer { position: relative; left: 0; right: 0; bottom: 0 }
+#footer p { max-width: none }

@@ -1,0 +1,13 @@
+/*
+ * menu-topbanner.css
+ *
+ * Theme with a fixed position blue banner with embedded
+ * horizontal navigation menu.
+ *
+ * Mikel Ward <mikel@mikelward.com>
+ *
+ * $Id: menu-topbanner.css 1207 2007-05-04 22:58:59Z  $
+ */
+
+@import "menu-topbanner-contents.css";
+@import "screen-width.css" screen and (min-width: 64em);
