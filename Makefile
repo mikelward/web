@@ -8,4 +8,4 @@ test:
 	python app_test.py
 
 deploy:
-	$HOME/google-cloud-sdk/platform/google_appengine/appcfg.py update ./
+	$(HOME)/google-cloud-sdk/platform/google_appengine/appcfg.py update ./
