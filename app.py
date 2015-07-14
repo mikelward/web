@@ -1,7 +1,6 @@
 
 import collections
 import os
-import sys
 
 appdir = os.path.dirname(__file__)
 
@@ -68,7 +67,7 @@ def normalize_path(path):
         path = path[:-5]
     path = path.rstrip('/')
     if not path:
-        return '/'
+        path = '/'
     return path
 
 
