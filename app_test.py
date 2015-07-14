@@ -32,10 +32,23 @@ class Test(unittest.TestCase):
         self.assertIn("Contact Mikel", response.data)
         self.assertIn("mikel@mikelward.com", response.data)
 
+    @unittest.skip('/static/m.ico is not served by werkzeug app yet.')
+    def testFavicon(self):
+        response = self.get('/static/m.ico')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.mimetype, 'image/x-icon')
+
     def testResume(self):
         response = self.get('/resume')
         self.assertEqual(response.status_code, 200)
         self.assertIn("Mikel's Resume", response.data)
+
+    @unittest.skip('/styles is not served by werkzeug app yet.')
+    def testStyles(self):
+        response = self.get('/styles/all.css')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.mimetype, 'text/css')
+        self.assertIn('font', response.data)
 
     def testMissing(self):
         response = self.get('/nosuch')
