@@ -1,5 +1,5 @@
 application: mikelwarddotcom
-version: 4
+version: 9
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -9,5 +9,7 @@ handlers:
   static_dir: 'static'
 - url: '/styles'
   static_dir: 'styles'
+- url: '/.well-known/acme-challenge'
+  static_dir: 'acme-challenge'
 - url: '/.*'
   script: 'app.application'
