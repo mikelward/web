@@ -1,5 +1,6 @@
 
 import collections
+import logging
 import os
 
 appdir = os.path.dirname(__file__)
@@ -49,17 +50,23 @@ env = Environment(loader=FileLoader(templatedir))
 
 @Request.application
 def application(request):
-    template = env.get_template('app.jinja')
-    path = normalize_path(request.path)
-    page, status = sitemap.get(path), 200
-    if not page:
-        page, status = notfound, 404
-    menu_items = menu_items_for_path(path)
-    return Response(template.render(name=page.name, path=page.path,
-                                    file=page.file, title=page.title,
-                                    menu_items=menu_items),
-                    content_type='text/html; charset=utf-8',
-                    status=status)
+    try:
+        logging.info('Request for %s', request.url)
+        template = env.get_template('app.jinja')
+        path = normalize_path(request.path)
+        page, status = sitemap.get(path), 200
+        if not page:
+            logging.info('No page for %s', path)
+            page, status = notfound, 404
+        menu_items = menu_items_for_path(path)
+        return Response(template.render(name=page.name, path=page.path,
+                                        file=page.file, title=page.title,
+                                        menu_items=menu_items),
+                        content_type='text/html; charset=utf-8',
+                        status=status)
+    except Exception as e:
+        logging.error('Error handling request for %s: %s', request.path, e)
+        return Response('Error generating page', status=500)
 
 
 def normalize_path(path):
