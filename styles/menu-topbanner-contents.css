@@ -43,7 +43,7 @@ input { padding: auto; -moz-box-sizing: content-box }
  */
 #menu { position: relative; z-index: 2; left: 0; right: 0; padding-left: 1em; padding-right: 5em }
 #menu { padding-top: 1px; padding-bottom: 1px }
-#menu { background-color: #5FA6D9; color: #000000; border-bottom: 1px solid gray; border-top: 1px solid gray }
+#menu { background-color: #5FA6D9; color: #000000 }
 #menu { margin-top: 0px }
 #menu * { display: inline }
 #menu a, #menu :link { text-decoration: none; text-transform: uppercase; color: #FFFFFF; padding: 0px 2px }
@@ -89,7 +89,7 @@ table .even { background-color: rgb(240,240,240) }
 
 #main { position: relative; padding: 0; max-width: 42em }
 #sidebar { width: 14em; float: right }
-#sidebar h2, #sidebar h3 { width: 15em; border-bottom: 1px solid gray }
+#sidebar h2, #sidebar h3 { width: 15em }
 #sidebar h2 :link, #sidebar h2 :visited, #sidebar h3 :link, #sidebar h3 :visited { color: black }
 #sidebar li { list-style: none }
 
