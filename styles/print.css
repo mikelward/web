@@ -1,7 +1,7 @@
 /*
- * print.css - StyleSheet for use on printer devices
+ * print.css - Stylesheet for use on printer devices
+ *
  * Mikel Ward <mikel@mikelward.com>
- * $Id: print.css 1168 2007-05-02 03:49:23Z  $
  */
 
 /* don't print the header, navigation links, or footer */
