@@ -5,7 +5,7 @@
  */
 
 /* don't print the header, navigation links, or footer */
-#banner, #header, #skip, #menu, #crumb, #footer, #upgrade, #sections { display: none }
+#header, #menu, #footer, #upgrade, #sections { display: none }
 
 /* disable underlining of acronyms and abbreviations */
 abbr, acronym { text-decoration: none; border-bottom: none }
