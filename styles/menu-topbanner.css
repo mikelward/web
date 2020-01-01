@@ -11,7 +11,6 @@ html { overflow-y: scroll }
   body { position: relative; width: 62em; top: 0; bottom: 0; margin-left: auto; margin-right: auto; }
 }
 
-/*p { padding-top: 1em }*/
 dl { padding-top: 0.5em; padding-bottom: 0.5em }
 dd { padding-left: 2em }
 li { margin-left: 1.5em }
@@ -46,25 +45,18 @@ input { padding: auto; -moz-box-sizing: content-box }
 #menu * { display: inline }
 #menu a, #menu :link { text-decoration: none; text-transform: uppercase; color: #FFFFFF; padding: 0px 2px }
 #menu a:hover, #menu :link:hover { color: #000000 }
-/*#menu a:hover, #menu :link:hover { text-decoration: underline }*/
+#menu a:hover, #menu :link:hover { text-decoration: underline }
 #menu ul { margin: 0px; padding: 0px }
 #menu li.submenu { margin-left: 3px }
 #menu li.menuitem, #menu li.current { padding: 0px 0px; margin: 0px 2px }
 #menu * > li.menuitem, #menu * > li.current { padding: 0px 0px; margin: 0px 0px }
-#menu li.current a { /*border-bottom: 1px solid red*/ text-decoration: underline }
-/*#menu li.current { font-weight: bolder }*/
+#menu li.current a { text-decoration: underline }
 
-/*#title { display: none }*/
 #title { position: relative; left: 0; right: 0 }
 #title { padding: 1em 1em; }
 #title h1 { margin-bottom: 0; margin-top: 0 }
-/*#crumb { padding-left: 0.5em }*/
 #crumb { display: none }
-/*#title h1 { display: none }*/
-/*#crumb { position: absolute; top: 6pt; left: 3px; right: auto }*/
 #crumb { text-transform: uppercase }
-/*#crumb { border-bottom: 1px solid #eeeeee; border-top: 1px solid #eeeeee }*/
-/*#crumb { border-bottom: 1px solid #DCDCDC }*/
 
 body { background-color: #FFFFFF; color: #000000 }
 
