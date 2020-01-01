@@ -21,7 +21,10 @@ p { max-width: 42em }
 #banner p { max-width: none }
 
 #title { padding: 0em 1em; margin: 0em }
-#content { padding: 0em 1em; margin: 0em } /* main division of page */
+#content { padding: 0; margin: 0 } /* main division of page */
+@media (min-width: 64em) {
+  #content { padding: 0em 1em }
+}
 #footer { padding: 1em }
 #sections a { padding-right: 0.5em; }
 
