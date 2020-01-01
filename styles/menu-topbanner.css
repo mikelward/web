@@ -24,6 +24,7 @@ p + ul, p + ol { margin-top: 0em }
 
 fieldset { padding: 0.5em }
 
+/* TODO: make h2 and below not uppercase? */
 h1 { font-size: large; text-transform: uppercase }
 h2 { font-size: medium; text-transform: uppercase }
 h3 { font-size: medium; text-transform: uppercase }
@@ -61,14 +62,6 @@ input { padding: auto; -moz-box-sizing: content-box }
 #menu li.current a { /*border-bottom: 1px solid red*/ text-decoration: underline }
 /*#menu li.current { font-weight: bolder }*/
 
-//#search { position: absolute; bottom: 0.0em; right: 1em; z-index: 1 }
-//#searchbutton { background-color: #DCDCDC /* gainsboro */; color: #000000 /* black */;
-  text-transform: uppercase; border: 1px solid #DCDCDC }
-//#searchfield { width: 8em }
-/* these work well for Gecko and WebKit but not MSIE, see -msie.css for IE override */
-//#searchbutton, x:-moz-any-link { padding: 0px }
-//#searchfield, x:-moz-any-link { border: none; padding: 2px }
-
 /*#title { display: none }*/
 #title { position: relative; left: 0; right: 0 }
 #title { padding: 1em 1em; }
@@ -86,8 +79,8 @@ body { background-color: #FFFFFF; color: #000000 }
 #content { position: relative }
 #content { padding: 0em 2em 1em 2em; margin: 0 } /* 0 padding at top because common elements such as p have top margin/padding */
 
-th { background-color: #DCDCDC /* gainsboro */ }
 /*
+th { background-color: #DCDCDC }
 table .odd { background-color: rgb(255,255,255) }
 table .even { background-color: rgb(240,240,240) }
 */
