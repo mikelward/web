@@ -1,7 +1,7 @@
-#banner, #banner *, #menu, #menu * { font-family: "Tahoma", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", sans-serif; }
+#banner, #banner *, #menu, #menu * { font-family: "Ubuntu", "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", sans-serif; }
 #banner { display: none }
-input { font-family: "Tahoma", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", sans-serif; }
-body, p, td, ul, li, dl, dd, dt { font-family: "Georgia", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", sans-serif; }
-h1,h2,h3,h4,h5,h6 { font-family: "Georgia", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", sans-serif; }
+input { font-family: "Ubuntu", "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", sans-serif; }
+body, p, td, ul, li, dl, dd, dt { font-family: "Ubuntu", "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", sans-serif; }
+h1, h2, h3, h4, h5, h6 { font-family: "Ubuntu", "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", sans-serif; }
 
-body { font-size: medium }
+body { font-size: large }
