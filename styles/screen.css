@@ -7,11 +7,9 @@
  *
  */
 
+html { background-color: #eeeeee }
+
 #menu { font-family: sans-serif; }
-input { font-family: sans-serif; }
-body, p, td, ul, li, dl, dd, dt { font-family: sans-serif }
-body, p, td, ul, li, dl, dd, dt { line-height: 140%; word-spacing: 0.005em }
-h1, h2, h3, h4, h5, h6 { font-family: sans-serif; line-height: 140%; word-spacing: -0.01em }
 
 a:link { color: blue; }
 a:visited { color: blue; }
@@ -30,7 +28,3 @@ p { max-width: 42em }
 .collapsible h2, .collapsible h3, .collapsible h4, .collapsible h5, .collapsible h6 { cursor: pointer; cursor: hand }
 
 #menu, #menu * { font-family: "Ubuntu", "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", sans-serif; }
-body, p, td, ul, li, dl, dd, dt { font-family: "Ubuntu", "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", sans-serif; }
-h1, h2, h3, h4, h5, h6 { font-family: "Ubuntu", "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", sans-serif; }
-
-body { font-size: large }
