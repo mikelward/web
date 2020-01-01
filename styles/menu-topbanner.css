@@ -39,7 +39,7 @@ input { padding: auto; -moz-box-sizing: content-box }
 /*
  * Menu is a row of undecorated uppercase white words acting as links.
  */
-#menu { position: relative; z-index: 2; left: 0; right: 0; padding-left: 1em; padding-right: 5em }
+#menu { position: relative; z-index: 2; left: 0; right: 0; padding-left: 1em; padding-right: 1em }
 #menu { padding-top: 1px; padding-bottom: 1px }
 #menu { background-color: #5FA6D9; color: #000000 }
 #menu { margin-top: 0px }

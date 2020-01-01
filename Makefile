@@ -2,7 +2,7 @@ build:
 	pip install --upgrade -t lib -r requirements.txt
 
 run:
-	gcloud app browse
+	dev_appserver.py app.yaml
 
 test:
 	python app_test.py
