@@ -1,8 +1,12 @@
     <style type="text/css">
       .date { vertical-align: top }
-      td.date { width: 7em; padding-right: 2em }
-      td.description { margin-right: 1em }
       table { table-layout: fixed; width: 100% }
+      td.date { width: 4em; padding-right: 2em }
+      @media only screen and (min-width: 64em) {
+        td.date { width: 8em; }
+      }
+      td.description { margin-right: 1em }
+}
     </style>
 
     <div style="text-align: center; margin: auto">
