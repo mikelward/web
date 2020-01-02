@@ -10,9 +10,8 @@
 * { padding: 0; margin: 0 }
 
 body { background: #ffffff; color: #000000; font-size: large }
-
 /* Desktop centers the content area, adds gray gutters. */
-@media (min-width: 64em) {
+@media all and (min-width: 64em) {
   body { position: relative; width: 62em; top: 0; bottom: 0; margin-left: auto; margin-right: auto; }
 }
 
@@ -41,6 +40,9 @@ p + ul, p + ol { margin-top: 0em }
 dl { padding-top: 0.5em; padding-bottom: 0.5em }
 dd { padding-left: 2em }
 li { margin-left: 1.5em }
+@media not all and (min-width: 64em) {
+  li { margin-left: 1.2em }
+}
 
 table { margin-top: 0.5em; margin-bottom: 0.5em }
 
