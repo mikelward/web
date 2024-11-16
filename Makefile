@@ -2,10 +2,10 @@ build:
 	pip install --upgrade -t lib -r requirements.txt
 
 run:
-	dev_appserver.py app.yaml
+	gunicorn main:app
 
 test:
-	python3 app_test.py
+	python3 main_test.py
 
 deploy:
 	gcloud app deploy

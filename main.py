@@ -9,6 +9,7 @@ import lib
 
 from jinja2 import BaseLoader, Environment, TemplateNotFound
 from werkzeug.wrappers import Request, Response
+from werkzeug.middleware.shared_data import SharedDataMiddleware
 
 
 Page = collections.namedtuple('Page', ['path', 'file', 'name', 'title'])
@@ -40,7 +41,7 @@ class FileLoader(BaseLoader):
             raise TemplateNotFound(template)
         mtime = os.path.getmtime(path)
         with open(path) as f:
-            source = f.read().decode('utf-8')
+            source = f.read()
         return source, path, lambda: mtime == os.path.getmtime(path)
 
 
@@ -49,7 +50,7 @@ env = Environment(loader=FileLoader(templatedir))
 
 
 @Request.application
-def application(request):
+def templateapp(request):
     try:
         logging.info('Request for %s', request.url)
         template = env.get_template('app.jinja')
@@ -67,6 +68,12 @@ def application(request):
     except Exception as e:
         logging.error('Error handling request for %s: %s', request.path, e)
         return Response('Error generating page', status=500)
+
+
+app = SharedDataMiddleware(templateapp, {
+    '/static': os.path.join(os.path.dirname(__file__), 'static'),
+    '/styles': os.path.join(os.path.dirname(__file__), 'styles'),
+})
 
 
 def normalize_path(path):

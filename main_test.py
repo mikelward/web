@@ -3,34 +3,34 @@ import unittest
 import lib
 
 from werkzeug.test import Client
-from werkzeug.wrappers import BaseResponse
+from werkzeug.wrappers import Response
 
-import app
+import main
 
 
 class Test(unittest.TestCase):
 
     def get(self, url):
-        client = Client(app.application, BaseResponse)
+        client = Client(main.app, Response)
         return client.get(url)
 
     def testHome(self):
         response = self.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Mikel's Home Page", response.data)
-        self.assertIn('view my <a href="/resume">resume</a>', response.data)
-        self.assertIn('<a href="/contact">contact me</a>', response.data)
+        self.assertIn("Mikel's Home Page", response.text)
+        self.assertIn('view my <a href="/resume">resume</a>', response.text)
+        self.assertIn('<a href="/contact">contact me</a>', response.text)
 
     def testAbout(self):
         response = self.get('/about')
         self.assertEqual(response.status_code, 200)
-        self.assertIn("About Mikel", response.data)
+        self.assertIn("About Mikel", response.text)
 
     def testContact(self):
         response = self.get('/contact')
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Contact Mikel", response.data)
-        self.assertIn("mikel@mikelward.com", response.data)
+        self.assertIn("Contact Mikel", response.text)
+        self.assertIn("mikel@mikelward.com", response.text)
 
     @unittest.skip('/static/m.ico is not served by werkzeug app yet.')
     def testFavicon(self):
@@ -41,22 +41,22 @@ class Test(unittest.TestCase):
     def testResume(self):
         response = self.get('/resume')
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Mikel's Resume", response.data)
+        self.assertIn("Mikel's Resume", response.text)
 
     @unittest.skip('/styles is not served by werkzeug app yet.')
     def testStyles(self):
         response = self.get('/styles/all.css')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.mimetype, 'text/css')
-        self.assertIn('font', response.data)
+        self.assertIn('font', response.text)
 
     def testMissing(self):
         response = self.get('/nosuch')
         self.assertEqual(response.status_code, 404)
         self.assertIn("That page doesn't exist.  Please use the menu",
-                      response.data)
+                      response.text)
         self.assertIn('<a href="/contact">contact me</a>',
-                      response.data)
+                      response.text)
 
 
 if __name__ == '__main__':
