@@ -8,8 +8,14 @@ appdir = os.path.dirname(__file__)
 import lib
 
 from jinja2 import BaseLoader, Environment, TemplateNotFound
+from werkzeug.utils import redirect
 from werkzeug.wrappers import Request, Response
 from werkzeug.middleware.shared_data import SharedDataMiddleware
+
+
+redirects = {
+    '/setup': 'https://github.com/mikelward/scripts/raw/main/setup',
+}
 
 
 Page = collections.namedtuple('Page', ['path', 'file', 'name', 'title'])
@@ -53,8 +59,10 @@ env = Environment(loader=FileLoader(templatedir))
 def templateapp(request):
     try:
         logging.info('Request for %s', request.url)
-        template = env.get_template('app.jinja')
         path = normalize_path(request.path)
+        if path in redirects:
+            return redirect(redirects[path])
+        template = env.get_template('app.jinja')
         page, status = sitemap.get(path), 200
         if not page:
             logging.info('No page for %s', path)
