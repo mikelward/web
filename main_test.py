@@ -50,6 +50,12 @@ class Test(unittest.TestCase):
         self.assertEqual(response.mimetype, 'text/css')
         self.assertIn('font', response.text)
 
+    def testSetupRedirect(self):
+        response = self.get('/setup')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.headers['Location'],
+                         'https://github.com/mikelward/scripts/raw/main/setup')
+
     def testMissing(self):
         response = self.get('/nosuch')
         self.assertEqual(response.status_code, 404)
