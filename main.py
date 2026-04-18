@@ -21,10 +21,11 @@ redirects = {
 Page = collections.namedtuple('Page', ['path', 'file', 'name', 'title'])
 
 pages = [
-    Page(path='/',        file='home',    name='Home',    title="Mikel's Home Page"),
-    Page(path='/about',   file='about',   name='About',   title="About Mikel"),
-    Page(path='/contact', file='contact', name='Contact', title="Contact Mikel"),
-    Page(path='/resume',  file='resume',  name='Resume',  title="Mikel's Resume"),
+    Page(path='/',         file='home',     name='Home',     title="Mikel's Home Page"),
+    Page(path='/about',    file='about',    name='About',    title="About Mikel"),
+    Page(path='/contact',  file='contact',  name='Contact',  title="Contact Mikel"),
+    Page(path='/resume',   file='resume',   name='Resume',   title="Mikel's Resume"),
+    Page(path='/software', file='software', name='Software', title="Mikel's Software"),
 ]
 
 notfound = Page(path='', file='notfound', name='Not Found', title="Page Not Found")
