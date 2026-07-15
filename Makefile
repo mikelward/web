@@ -9,3 +9,6 @@ test:
 
 deploy:
 	gcloud app deploy
+
+deploy-vercel:
+	vercel --prod
