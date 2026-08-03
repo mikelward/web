@@ -183,10 +183,14 @@ make deploy   # gcloud app deploy
   matches a comment you just posted, it's your own echo — continue without
   comment. The test is "did *I* just post this body?", not "who is the
   author?".
-- **Keep watching merged PRs for late review comments.** Reviewers and bots
-  routinely comment after merge. Stay subscribed and handle each new comment
-  per the reply-or-resolve rule; stop once every post-merge comment is handled
-  or after ~24h of silence.
+- **Keep watching a PR until its state is final**: merged, or closed unmerged.
+  Wait for one more check to see CI and Codex report on the final head, but
+  don't block on a report that may never land — an early manual merge or a
+  down review service — settle for whatever's known by then and move on.
+  Either way, run one last reply-or-resolve pass, then cancel the watch in
+  full: `unsubscribe_pr_activity` *and* the pending scheduled trigger, not
+  just one of the two. Open a follow-up PR (with its own watch) for anything
+  a merged PR still needs.
 
 ## Cost and reliability
 
