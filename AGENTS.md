@@ -184,13 +184,16 @@ make deploy   # gcloud app deploy
   comment. The test is "did *I* just post this body?", not "who is the
   author?".
 - **Keep watching a PR until its state is final**: merged, or closed unmerged.
+  A scheduled check is the watch — `subscribe_pr_activity` is opt-in, since
+  it pushes every comment, check run and bot reply into the conversation as a
+  raw event and buries the thread the user is actually reading.
   Wait for one more check to see CI and Codex report on the final head, but
   don't block on a report that may never land — an early manual merge or a
   down review service — settle for whatever's known by then and move on.
   Either way, run one last reply-or-resolve pass, then cancel the watch in
-  full: `unsubscribe_pr_activity` *and* the pending scheduled trigger, not
-  just one of the two. Open a follow-up PR (with its own watch) for anything
-  a merged PR still needs.
+  full: the pending scheduled trigger, *and* `unsubscribe_pr_activity` if you
+  ever subscribed. Open a follow-up PR (with its own watch) for anything a
+  merged PR still needs.
 
 ## Cost and reliability
 
