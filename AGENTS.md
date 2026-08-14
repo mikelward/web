@@ -156,8 +156,10 @@ make deploy   # gcloud app deploy
 
 ## Reviews
 
-- **Codex is the automated reviewer on this repo** — not Copilot. Its reviews
-  are triggered automatically; you don't request them.
+- **Codex is the automated reviewer on this repo** — not Copilot. Its
+  reviews are triggered automatically; you don't request them, except when
+  nothing has come back five minutes after a push — that means it never
+  picked the push up.
 - **Address Codex comments automatically — don't wait to be asked.** Read
   each one, decide whether it's a real issue or a false positive, and if it's
   real, fix it in the same PR. Fold the fix into the commit it belongs to
@@ -178,21 +180,19 @@ make deploy   # gcloud app deploy
   the SHA and comment count, e.g. `Codex reviewed 87d9f02 — 0 comments`. Tie
   it to the *latest* pushed SHA so a stale review of a superseded commit isn't
   conflated with the current state.
-- **Read the Codex verdict, don't infer it.** It reacts to the PR **body** —
-  `issue_read` → `reactions` — not to a review thread, whose `Useful?` bar a
-  page fetch finds instead and which reads true on any PR Codex has
-  commented on. `eyes` while it reads, `+1` when it finds nothing, and the
-  reaction is revoked as a new push lands, so what you can see belongs to
-  the head you can see: `+1` on green CI is a merge, with nothing further to
-  wait for. It starts within a couple of minutes, so no reaction five
-  minutes after a push means it never picked the push up — comment `@codex
-  review`, once. Findings arrive as review comments or as a top-level PR
-  comment and decide the gate whatever the reaction says. Leave PR-body
-  reactions to Codex; the count is anonymous, so one from anyone else is
-  indistinguishable.
-- **A finding can arrive as a top-level PR comment.** `get_review_comments`
-  returns only inline threads, so read `get_comments` too — a P1 sat
-  unanswered for two hours because a sweep of the threads never saw it.
+- **Read the Codex verdict, don't infer it.** It reacts to the PR body
+  (`issue_read` → `reactions`), not to a review thread, whose `Useful?` bar
+  reads true on any PR it has commented on. `eyes` means reading, `+1` means
+  clean, and Codex revokes it on push — so a visible one belongs to the
+  visible head, and `+1` with green CI is a merge. The count names no
+  author, so leave PR-body reactions to Codex: nobody else's is revoked, and
+  a review is the attributable form, naming the commit it read. Findings
+  arrive as review comments, as a top-level comment, or as a review — read
+  `get_review_comments`, `get_comments` and `get_reviews` to the last page,
+  since all three page oldest first — and they block the merge until fixed
+  or rebutted; an acknowledgement is not an answer. Nothing from Codex since
+  the push, five minutes on, means it never picked it up — comment `@codex
+  review`, once.
 - **Skip echo events silently.** Replies posted via the GitHub MCP come back
   moments later as webhook events authored by the same identity; if the body
   matches a comment you just posted, it's your own echo — continue without
