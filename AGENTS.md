@@ -143,10 +143,10 @@ make deploy   # gcloud app deploy
   Re-read the diff against `origin/master` and patch whatever drifted, then
   post the PR link in the chat reply for that push, not only at the end of the
   conversation.
-- **"Drive to merge"** is shorthand for the whole loop: open the PR, wait for
-  the automatic Codex review, address every review comment — fix it if you
-  agree, reply on the thread saying why if you don't — and merge once CI is
-  green and Codex has left its thumbs up.
+- **"Drive to merge"** is shorthand for the whole loop: open the PR, wait
+  for the automatic Codex review, address every review comment — fix it if
+  you agree, reply on the thread saying why if you don't — and merge once CI
+  is green and Codex's verdict for the current head is in.
 - When a feature has multiple open PRs, list **every** open PR by URL, one per
   line — the "View PR" chip sticks to the first link and hides the rest
   (anthropics/claude-code#46625).
@@ -178,6 +178,21 @@ make deploy   # gcloud app deploy
   the SHA and comment count, e.g. `Codex reviewed 87d9f02 — 0 comments`. Tie
   it to the *latest* pushed SHA so a stale review of a superseded commit isn't
   conflated with the current state.
+- **Read the Codex verdict, don't infer it.** It reacts to the PR **body** —
+  `issue_read` → `reactions` — not to a review thread, whose `Useful?` bar a
+  page fetch finds instead and which reads true on any PR Codex has
+  commented on. `eyes` while it reads, `+1` when it finds nothing, and the
+  reaction is revoked as a new push lands, so what you can see belongs to
+  the head you can see: `+1` on green CI is a merge, with nothing further to
+  wait for. It starts within a couple of minutes, so no reaction five
+  minutes after a push means it never picked the push up — comment `@codex
+  review`, once. Findings arrive as review comments or as a top-level PR
+  comment and decide the gate whatever the reaction says. Leave PR-body
+  reactions to Codex; the count is anonymous, so one from anyone else is
+  indistinguishable.
+- **A finding can arrive as a top-level PR comment.** `get_review_comments`
+  returns only inline threads, so read `get_comments` too — a P1 sat
+  unanswered for two hours because a sweep of the threads never saw it.
 - **Skip echo events silently.** Replies posted via the GitHub MCP come back
   moments later as webhook events authored by the same identity; if the body
   matches a comment you just posted, it's your own echo — continue without
