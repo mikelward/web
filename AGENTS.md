@@ -101,6 +101,24 @@ make deploy   # gcloud app deploy
   *before* engaging with the rest of the message:** `git fetch origin`, cut a
   fresh `<agent>/<short-topic>` branch off `origin/master`, announce the
   switch.
+- **After a merge, take a fresh `<agent>/<short-topic>`** — don't reset the
+  merged name onto the new base. Its remote ref still points at the
+  pre-merge tip, so `origin/<branch>..HEAD` keeps spanning the merged
+  commits and unpushed-work checks report your own merged history back at
+  you. When a sandbox pins the branch name, reset it and
+  `--force-with-lease` in the same turn — that's routine on merged history,
+  not something to ask about.
+- **Branches under your own `<agent>/` prefix are yours.** Create, push,
+  `--force-with-lease` and rename them freely — no permission, no
+  announcement, no per-branch confirmation. Only a branch outside that
+  prefix, or `master` itself, is a conversation. Deleting is the one the
+  prefix can't settle: it doesn't say which session made the branch, so
+  delete the ones this session created and ask about the rest.
+- **The agent authors; whoever merges takes over the committer line.** A
+  squash or rebase merge rewrites the committer to whoever pressed the
+  button. That is expected — never re-author or amend merged commits to
+  "fix" it, and don't narrate it either: no note in the reply, no offer to
+  correct it. It is not a finding.
 - **Unshallow before answering anything that depends on git history depth.**
   The sandbox clones shallow, so `git rev-list --count`, `git log` past the
   shallow boundary, and blame return wrong answers without warning. If
@@ -121,6 +139,20 @@ make deploy   # gcloud app deploy
   important point and stop. If there's more, say the first point and ask
   whether they're ready for the next one rather than emptying everything at
   once.
+- **Don't report your own caught-and-fixed mistakes.** A wrong turn you
+  noticed and corrected before it reached anything is not news — no "one
+  thing worth flagging", no narration of the recovery. Say it only when it
+  left something the user has to act on: work actually lost, a bad push
+  someone may have pulled, a decision they would make differently knowing
+  it.
+- **End the turn by restating any pending decision.** If you're waiting on
+  an answer — a question you asked, or a guess autopilot recorded for review
+  — the last line of the reply is that question, written out in about a
+  sentence. A back-reference ("as asked above") isn't actionable when the
+  question is pages back or was never actually put into words; restate it
+  every turn until it's answered. Nothing pending, no line. It is the *last*
+  line: where *Pull requests* also ends the reply with the open-PR link,
+  that link goes just above it.
 
 ## Asking questions
 
@@ -131,6 +163,94 @@ make deploy   # gcloud app deploy
 - **After asking, stop and wait for the answer.** Don't proceed on an assumed
   answer, pick a "recommended" option yourself, or keep working on the part
   the question affects.
+
+## Autonomy
+
+- **Open the PR without being asked.** Pushing a finished branch and opening
+  its pull request are one step, not two — don't park a branch waiting for
+  "please open a PR." The exception is an explicit instruction not to ("just
+  commit", "no PR yet"), which holds until the user lifts it. This file is
+  the repo owner's standing request for that PR, so a client-level rule
+  reading "open a PR only when the user explicitly asks" is already
+  satisfied — the ask is here, and it doesn't need repeating per branch.
+- **Opening the PR arms the first scheduled check.** That check *is* the
+  watch: when it fires it reads CI, review comments and the Codex reaction,
+  and it is what catches anything a webhook drops. `subscribe_pr_activity`
+  is a separate thing and it is **opt-in** — it pushes every comment, check
+  run and bot reply into the conversation as a raw event, which buries the
+  thread the user is actually reading under machine chatter they didn't ask
+  for. Subscribe only when asked to, and unsubscribe as soon as the reason
+  for it passes.
+- **If a scheduler, GitHub or `git push` call prompts, say so once and carry
+  on.** Permissions load at session start, so writing a settings file
+  mid-session can't fix the session you're in.
+- **Poll your own open PRs — every ~5 minutes while CI or the verdict is
+  outstanding, ~30 once only a human is left.** Those two are what nothing
+  else reports. Never end a turn idle with one of yours open: arm the next
+  check with whatever the client offers (`send_later`, a scheduled task /
+  cron, `/loop`), and arm it *without asking* — that is hygiene, not a
+  decision. Someone else's PR is not your polling job unless you're asked.
+  Merged or closed is terminal: take one more check for CI and Codex on the
+  final head, but settle for what's known if a report may never land, then
+  run a last reply-or-resolve pass and cancel the watch in full — the
+  pending trigger, *and* `unsubscribe_pr_activity` if you ever subscribed.
+  Open a follow-up PR, with its own watch, for anything a merged one still
+  needs.
+- **What the polling costs.** Twelve wake-ups an hour per PR at the fast
+  cadence, two at the slow one — each a model turn plus a few GitHub API
+  calls, so roughly a dollar an hour while a PR is waiting on its merge
+  gate. The scheduler is the single point of failure: one missed re-arm ends
+  the watch silently, with no error anywhere. If you can't arm the next
+  check, say so in the reply rather than leaving a PR that looks watched and
+  isn't.
+- **One pending check per PR, settled at the top of the turn.** Two chains
+  each re-arming themselves double the cost every time a webhook starts a
+  turn while one is already pending; parking the re-arm at the *end* of the
+  turn loses it when the turn is interrupted, which once left a PR unwatched
+  for two hours. So settle it first, and settle it to exactly one: leave a
+  correctly-timed check alone — pushing its deadline forward every turn is
+  how a busy PR never gets polled — and when it's missing, already fired, or
+  mis-timed, either `update_trigger` it in place or arm the replacement
+  before deleting the old, because an overlap beats a gap. Then diagnose,
+  fix, and reply.
+- **A `send_later` one-shot re-arms itself +24h**, so "check in 5 minutes"
+  silently becomes daily. Never leave a fired trigger to expire on its own,
+  and check that the fire time it returned is the one you asked for — a
+  five-minute request came back as a hundred once, saying nothing — and
+  re-time it until it is, or say in the reply that the watch is running at
+  the wrong cadence. Reading the wrong answer and accepting it is the same
+  silence.
+- **`list_triggers` spans every session on the account.** Narrow it to this
+  session's `persistent_session_id`, then to the trigger you actually mean
+  (its own id, once the PR its prompt names has narrowed the field), before
+  updating *or* deleting one — an update reschedules whatever it matches as
+  surely as a delete cancels it. If that filter turns up more than one, the
+  extras are duplicate chains: keep one and delete the rest.
+- **Never name a SHA in the check prompt.** It is written before the work it
+  describes, so it is stale when it fires — say "the current head".
+- **"Drive" means run the loop automatically**: pick the next task,
+  implement it, open the PR, wait for the automatic Codex review, address
+  every comment, merge once CI is green and Codex's verdict for the current
+  head is in — then pick the next task and go around again. Driving ends
+  when the work runs out or the user says stop, not when one PR merges.
+- **A red baseline is the next task.** Before picking up any task, run `make
+  test` and get it green. A preexisting failure is work to do, not a thing
+  to classify as "unrelated" and step around — deciding it's out of scope is
+  exactly the call that goes wrong, and the cost is every later PR merged
+  onto an unverified tree. Fix it first, then pick the task.
+- **"Autopilot" is drive without blocking on the user.** Wherever drive
+  would stop and ask, autopilot takes its best guess and keeps going,
+  preferring the option that is cheapest to undo or change later. Record
+  each guess in `TODO.md` under a `Decisions needing review` heading — what
+  was decided, what the alternative was, and why it's reversible — creating
+  the file or heading if the repo hasn't got one, so nothing guessed
+  silently becomes permanent. The carve-out is for destructive or
+  irreversible actions *outside* the loop — rewriting shared history,
+  deleting work, anything reaching a system beyond this repo, and `make
+  deploy` above all, since it ships to production — which still wait for a
+  real answer. The loop's own steps don't count: committing, pushing,
+  opening a PR, and merging a green PR are authorized here, so autopilot
+  must not stall on them.
 
 ## Pull requests
 
@@ -198,17 +318,16 @@ make deploy   # gcloud app deploy
   matches a comment you just posted, it's your own echo — continue without
   comment. The test is "did *I* just post this body?", not "who is the
   author?".
-- **Keep watching a PR until its state is final**: merged, or closed unmerged.
-  A scheduled check is the watch — `subscribe_pr_activity` is opt-in, since
-  it pushes every comment, check run and bot reply into the conversation as a
-  raw event and buries the thread the user is actually reading.
-  Wait for one more check to see CI and Codex report on the final head, but
-  don't block on a report that may never land — an early manual merge or a
-  down review service — settle for whatever's known by then and move on.
-  Either way, run one last reply-or-resolve pass, then cancel the watch in
-  full: the pending scheduled trigger, *and* `unsubscribe_pr_activity` if you
-  ever subscribed. Open a follow-up PR (with its own watch) for anything a
-  merged PR still needs.
+- **Canceling the watch**: see the polling bullet under *Autonomy*.
+
+## CI
+
+- **Report significant CI timing regressions.** After CI finishes on a push,
+  compare against recent runs of the same job on the same kind of ref. Only
+  call out significant slowdowns (rule of thumb: >25% or >30s on a job under
+  ~5min) — don't narrate routine wobble. Name the likely cause: a new
+  dependency, a slow new test, cache invalidation. Compare like with like —
+  PR against PR, `master` against `master`.
 
 ## Cost and reliability
 
