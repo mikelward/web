@@ -167,8 +167,9 @@ make deploy   # gcloud app deploy
   Group several small fixes into one commit when they share a topic.
 - **Judge every review comment on merit, whoever wrote it.** Verify the claim
   before acting; if it doesn't hold up, reply saying why and decline.
-- **Never leave a review comment thread silently dismissed.** Either reply on
-  the thread *or* resolve it. When you think a comment is a false positive,
+- **Never leave a review comment thread silently dismissed.** Answer on the thread — a
+  disagreement is an answer, so say why — then resolve it once the fix is on the
+  head or the point is rebutted; anything still to do stays open. When you think a comment is a false positive,
   say *why* on the thread (one or two sentences). Acknowledgement noise is
   fine and preferred over silence.
 - **`resolve_review_thread` works — pass the `PRRT_*` thread node ID** from
@@ -205,10 +206,13 @@ make deploy   # gcloud app deploy
   Wait for one more check to see CI and Codex report on the final head, but
   don't block on a report that may never land — an early manual merge or a
   down review service — settle for whatever's known by then and move on.
-  Either way, run one last reply-or-resolve pass, then cancel the watch in
-  full: the pending scheduled trigger, *and* `unsubscribe_pr_activity` if you
-  ever subscribed. Open a follow-up PR (with its own watch) for anything a
-  merged PR still needs.
+  Either way, run one last reply-and-resolve pass. Nothing is holding the PR
+  now, so on a merged one anything real goes to a follow-up PR (with its own
+  watch), named on the thread, before you resolve it; leaving it open records
+  the work nowhere. A closed-unmerged PR is a stop — the work was abandoned,
+  so answer, resolve, and open nothing. Then cancel the watch in full: the
+  pending scheduled trigger, *and* `unsubscribe_pr_activity` if you ever
+  subscribed.
 
 ## Cost and reliability
 
