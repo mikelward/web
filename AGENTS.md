@@ -213,6 +213,18 @@ make deploy   # gcloud app deploy
   so answer, resolve, and open nothing. Then cancel the watch in full: the
   pending scheduled trigger, *and* `unsubscribe_pr_activity` if you ever
   subscribed.
+- **A PR reading `dirty` — always — or `behind` where the ruleset requires
+  branches up to date, needs a rebase onto its base and a lease-guarded
+  force-push. Fetch both refs by explicit refspec, unshallow a shallow clone,
+  and rebase onto the fetched `origin/<base>` — never the local branch a fetch
+  leaves behind. Confirm before you rebase that your branch has every commit
+  the remote head has, and before you push that the head has not moved since
+  the tip you noted before fetching: the push flags do not reliably refuse a
+  rewind, a commit you never fetched, or one you fetched and did not rebase
+  onto, and overwriting any of them loses someone's work. If either fails, or
+  you can't tell, stop and ask.** No webhook reports a base
+  advance, so read `mergeable_state` on the scheduled check, not just the
+  checks.
 
 ## Cost and reliability
 
