@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    # `edited` is here because a retarget changes what the PR's diff is
+    # measured against while the head — and any `gate` check run already
+    # minted on it — stays put, so a base change must start a fresh run.
+    # Title and body edits re-run the lane too, deliberately: a skipped
+    # job would be worse, because GitHub counts a skipped required check
+    # as satisfied, so skipping the gate on a "harmless" edit would let a
+    # newer skipped run replace a red verdict on the same head.
+    types: [opened, synchronize, reopened, edited]
+
+# Nothing here writes to the repository. The docs lane's classify and gate
+# jobs read the PR's files and commits through the workflow token;
+# read-only, and still nothing here can write.
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  # Decides whether the test job may skip: true only when every changed
+  # file in the PR is housekeeping (markdown outside templates/, static/,
+  # and styles/ — see .github/lanes.conf for the rule; the engine is
+  # mikelward/lanes). Pushes to master are always classified as code.
+  classify:
+    name: Classify the diff
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      docs_only: ${{ steps.lane.outputs.docs_only }}
+      base_sha: ${{ steps.lane.outputs.base_sha }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: mikelward/lanes@main
+        id: lane
+        with:
+          mode: classify
+          pr: ${{ github.event.pull_request.number }}
+
+  test:
+    runs-on: ubuntu-latest
+    needs: classify
+    if: needs.classify.outputs.docs_only != 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v6
+        with:
+          # The major.minor app.yaml's `runtime: python312` deploys; keep the
+          # two in step when moving the runtime.
+          python-version: '3.12'
+
+      - name: Build
+        run: make build
+
+      - name: Test
+        run: make test
+
+  # The one check the master ruleset should require. Always runs, always
+  # reports — green only when the test job succeeded, or when it was skipped
+  # and the skip is INDEPENDENTLY verified as justified: the gate re-derives
+  # the classification itself rather than trusting classify's output. Any
+  # other combination is an explicit red, never a silent pass.
+  gate:
+    name: gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [classify, test]
+    if: always()
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: mikelward/lanes@main
+        with:
+          mode: gate
+          pr: ${{ github.event.pull_request.number }}
+          classify-result: ${{ needs.classify.result }}
+          # Only read on a dispatched run, and harmless on a pull_request one,
+          # which takes the same commit from its own event payload.
+          base-sha: ${{ needs.classify.outputs.base_sha }}
+          results: >-
+            test=${{ needs.test.result }}
