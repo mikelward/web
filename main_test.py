@@ -65,6 +65,72 @@ class Test(unittest.TestCase):
                       response.text)
 
 
+class LanesPolicyTest(unittest.TestCase):
+    """Tests for the CI lane policy, .github/lanes.conf.
+
+    The engine (mikelward/lanes) is tested in its own repository; what it
+    cannot test is this repo's policy, whose failure mode is the quiet one: a
+    broadened rule makes classify and gate derive the same wrong docs verdict,
+    so `make test` skips under a green required check. The shape pin below is
+    the real guard — editing a rule fails it, forcing this file to move in the
+    same review — and the classification cases keep both directions honest.
+    The matcher translates only the pinned pattern forms (`<dir>/**` and
+    `**/*.<ext>`, per the lanes README: `*` never crosses `/`, `**` does); an
+    unpinned form fails the test rather than being guessed at.
+    """
+
+    def parse(self):
+        rules = []
+        directives = {}
+        with open('.github/lanes.conf') as f:
+            for raw in f:
+                line = raw.split(' #')[0].strip()
+                if not line or line.startswith('#'):
+                    continue
+                word, rest = line.split(None, 1)
+                if word in ('docs', 'code'):
+                    rules.append((word, rest))
+                else:
+                    directives[word] = rest.split()
+        return rules, directives
+
+    def matches(self, path, pattern):
+        if pattern.endswith('/**'):
+            return path.startswith(pattern[:-2])
+        if pattern.startswith('**/*.') and '/' not in pattern[3:]:
+            return path.rsplit('/', 1)[-1].endswith(pattern[4:])
+        self.fail('pattern %r is not a form this matcher covers — '
+                  'teach it the new form along with the policy edit' % pattern)
+
+    def classify(self, path):
+        rules, _ = self.parse()
+        for verdict, pattern in rules:
+            if self.matches(path, pattern):
+                return verdict
+        return 'code'
+
+    def testPolicyShape(self):
+        rules, directives = self.parse()
+        self.assertEqual(rules, [('code', 'templates/**'),
+                                 ('code', 'static/**'),
+                                 ('code', 'styles/**'),
+                                 ('docs', '**/*.md')])
+        self.assertEqual(directives['prefixes'], ['docs'])
+        self.assertEqual(directives['dispatch-without-pr'], ['refuse'])
+
+    def testMarkdownOutsideShippedTreesIsDocs(self):
+        for path in ('AGENTS.md', 'TODO.md', 'docs/notes.md'):
+            self.assertEqual(self.classify(path), 'docs', path)
+
+    def testEverythingServedOrExecutedIsCode(self):
+        for path in ('main.py', 'lib.py', 'app.yaml', 'Makefile',
+                     'requirements.txt', 'templates/home.html',
+                     'templates/notes.md', 'static/logo.png',
+                     'styles/all.css', '.github/workflows/ci.yml',
+                     '.gitignore'):
+            self.assertEqual(self.classify(path), 'code', path)
+
+
 if __name__ == '__main__':
     unittest.main()
 
