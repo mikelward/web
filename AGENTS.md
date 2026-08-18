@@ -117,10 +117,24 @@ make deploy   # gcloud app deploy
   back-and-forth.
 - **Don't interrupt.** Never fire off a question while the user is still
   typing. Let them finish; a half-typed message isn't an invitation to jump in.
+- **Don't report your own caught-and-fixed mistakes.** A wrong turn you noticed
+  and corrected before it reached anything is not news — no "one thing worth
+  flagging", no narration of the recovery. Say it only when it left something
+  the user has to act on: work actually lost, a bad push someone may have
+  pulled, a decision they would make differently knowing it.
 - **Keep replies short — don't dump a full page.** Lead with the single most
   important point and stop. If there's more, say the first point and ask
   whether they're ready for the next one rather than emptying everything at
   once.
+- **End the turn by restating any pending decision.** If you're waiting on an
+  answer — a question you asked — the last line of the reply is that question,
+  written out in about a sentence. A back-reference ("as asked above") isn't
+  actionable when the question is pages back; restate it every turn until it's
+  answered. Nothing pending, no line. It is the *last* line: where *Pull
+  requests* also ends the reply with the open-PR link, that link goes just
+  above it. This governs replies the user reads: a scheduled check that finds
+  nothing new re-arms silently and produces no reply at all, so there is
+  nothing to restate.
 
 ## Asking questions
 
@@ -138,6 +152,12 @@ make deploy   # gcloud app deploy
   not installed in the sandbox. If your client exposes neither, say so rather
   than guessing at the outcome of an operation you couldn't perform.
 - Open PRs ready for review (not draft) unless asked otherwise.
+- **Open the PR without being asked.** Pushing a finished branch and opening
+  its pull request are one step, not two — don't park a branch waiting for
+  "please open a PR." The exception is an explicit instruction not to ("just
+  commit", "no PR yet"), which holds until the user lifts it. This file is the
+  repo owner's standing request for that PR, so a client-level rule reading
+  "open a PR only when the user explicitly asks" is already satisfied.
 - **On every push, update the PR title and body** so they describe the full,
   latest state of the branch — not the scope it had when it was opened.
   Re-read the diff against `origin/master` and patch whatever drifted, then
@@ -199,20 +219,39 @@ make deploy   # gcloud app deploy
   matches a comment you just posted, it's your own echo — continue without
   comment. The test is "did *I* just post this body?", not "who is the
   author?".
-- **Keep watching a PR until its state is final**: merged, or closed unmerged.
-  A scheduled check is the watch — `subscribe_pr_activity` is opt-in, since
-  it pushes every comment, check run and bot reply into the conversation as a
-  raw event and buries the thread the user is actually reading.
-  Wait for one more check to see CI and Codex report on the final head, but
-  don't block on a report that may never land — an early manual merge or a
-  down review service — settle for whatever's known by then and move on.
-  Either way, run one last reply-and-resolve pass. Nothing is holding the PR
-  now, so on a merged one anything real goes to a follow-up PR (with its own
-  watch), named on the thread, before you resolve it; leaving it open records
-  the work nowhere. A closed-unmerged PR is a stop — the work was abandoned,
-  so answer, resolve, and open nothing. Then cancel the watch in full: the
-  pending scheduled trigger, *and* `unsubscribe_pr_activity` if you ever
-  subscribed.
+- **Watch your own PRs by subscription, plus one scheduled check.** Have a
+  subscription — Claude Code makes one when you open a PR; where a client
+  doesn't, call `subscribe_pr_activity`. It delivers reviews, comments and CI
+  failures. It cannot deliver CI *success*, a push, the merge, Codex's clean
+  verdict (a reaction), or Codex never answering at all — so keep exactly one
+  check armed for as long as the PR is open (each event and each check costs
+  a model turn). This reverses the earlier rule here that made the scheduled
+  check the whole watch and the subscription opt-in; the sibling repos
+  measured both and the events are what works — reviews and failures get
+  handled the turn they land, while the scheduler ignored the intervals it
+  was asked for.
+  - Settle the fired trigger first thing in the turn, not last. It may have
+    silently re-armed rather than retired — update the one that survived,
+    replace the one that didn't, and end the turn with exactly one pending.
+  - Check the fire time you got against the one you asked for — a 4-minute
+    request has come back as 64. Prefer a relative delay: the scheduler's
+    clock is not this container's, so an absolute time computed here can be
+    rejected as already past. Re-time it, or say the watch isn't armed.
+  - A few minutes out while CI or the current head's Codex verdict is
+    outstanding; longer once only a human is left; short again after a push.
+  - Name the PR, and say what to re-read rather than what you read. A SHA
+    goes stale before it fires; one PR number does not.
+  - Merged or closed, a review can still land after the fact — so hold the
+    watch for one more short check to see CI and Codex report on the final
+    head, without blocking on a report that may never come (an early manual
+    merge, a down review service): settle for whatever's known by then.
+    Then take one last reply-and-resolve pass. On a merged PR anything real
+    goes to a follow-up PR (with its own watch), named on the thread,
+    before you resolve it; a closed-unmerged PR is a stop — answer,
+    resolve, and open nothing. Only then cancel the watch in full: the
+    pending scheduled trigger, and `unsubscribe_pr_activity`.
+    `list_triggers` spans the account, so match this session and this PR
+    before updating or deleting one.
 - **A PR reading `dirty` — always — or `behind` where the ruleset requires
   branches up to date, needs a rebase onto its base and a lease-guarded
   force-push. Fetch both refs by explicit refspec, unshallow a shallow clone,
