@@ -51,3 +51,14 @@ change that installs it would block the change that installs it.
 
 Note for whoever sets them: the default branch here is `master`, not `main`,
 so the ruleset's target has to say so.
+
+## Review and merge gates
+
+- [ ] Add a CI gate (`ci.yml`) running whatever checks this repository
+      supports, so the ruleset has a test gate to require — or record
+      here that there is deliberately nothing to run.
+- [ ] Verify the settings half of the fleet's bar — every repository
+      works the same: comprehensive automated review, required merge
+      gates, and auto-merge. A ruleset on the default branch requiring
+      the gates, the `codex` status, conversation resolution and
+      up-to-date branches, with the auto-merge setting enabled.
