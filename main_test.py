@@ -1,3 +1,4 @@
+import re
 import unittest
 
 import lib
@@ -129,6 +130,52 @@ class LanesPolicyTest(unittest.TestCase):
                      'styles/all.css', '.github/workflows/ci.yml',
                      '.gitignore'):
             self.assertEqual(self.classify(path), 'code', path)
+
+
+class WorkflowCheckRenameTest(unittest.TestCase):
+    """Guards the temporary state while renaming the required check from
+    `gate` to `lanes` (mikelward/lanes#9): a duplicate job, kept in sync by
+    hand until the ruleset is flipped and `gate` is deleted. Nothing else
+    pins the two jobs together, so a hand edit to one that forgets the other
+    would drift silently -- exactly the false-pass failure mode this suite
+    is meant to catch.
+
+    Read as regexes over YAML, same tradeoff LanesPolicyTest makes above: a
+    real parser is unnecessary weight for pinning exact strings a human
+    wrote and a human will edit.
+
+    Delete this class along with the `gate` job once the ruleset requires
+    only `lanes` -- it exists to guard the overlap window, not the steady
+    state.
+    """
+
+    def setUp(self):
+        with open('.github/workflows/ci.yml') as f:
+            self.workflow = f.read()
+
+    def jobBlock(self, key):
+        marker = '\n  %s:\n' % key
+        start = self.workflow.find(marker)
+        self.assertNotEqual(start, -1, 'job "%s" not found in ci.yml' % key)
+        rest = self.workflow[start + 1:]
+        after_key_line = rest[rest.find('\n') + 1:]
+        m = re.search(r'\n {2}\S', after_key_line)
+        if m is None:
+            return self.workflow[start + 1:]
+        end = start + 1 + rest.find('\n') + 1 + m.start()
+        return self.workflow[start + 1:end]
+
+    def testBothJobsExistWhileTheRenameIsInFlight(self):
+        self.assertRegex(self.workflow, r'\n {2}gate:\n {4}name: gate\n')
+        self.assertRegex(self.workflow, r'\n {2}lanes:\n {4}name: lanes\n')
+
+    def testGateAndLanesRunIdenticallyApartFromTheirOwnName(self):
+        def strip(block):
+            return re.sub(r'^ {2}\S+:\n {4}name: \S+\n', '', block)
+        self.assertEqual(
+            strip(self.jobBlock('gate')), strip(self.jobBlock('lanes')),
+            'the gate and lanes jobs have drifted -- keep them identical '
+            'until gate is deleted')
 
 
 if __name__ == '__main__':
