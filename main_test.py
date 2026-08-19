@@ -178,6 +178,43 @@ class WorkflowCheckRenameTest(unittest.TestCase):
             'until gate is deleted')
 
 
+class ZizmorWorkflowTest(unittest.TestCase):
+    """Tests for the advisory zizmor scan, .github/workflows/zizmor.yml.
+
+    Advisory means non-blocking by design, so a malformed policy or a broken
+    invocation would otherwise fail silently -- the job stays red forever and
+    nothing else notices, since nothing requires it. Read with plain string
+    matching, not a YAML parser, matching main_test.py's other conventions.
+    """
+
+    def workflow(self):
+        with open('.github/workflows/zizmor.yml') as f:
+            return f.read()
+
+    def testPinsTheZizmorVersionExactly(self):
+        # An unpinned run takes whatever release is newest, and a new release
+        # adds audits -- bumping the pin should be a deliberate edit that
+        # re-reads the findings, never a side effect.
+        self.assertIn('pipx run --spec zizmor==1.29.0 zizmor', self.workflow())
+
+    def testScansOffline(self):
+        self.assertIn(' --offline', self.workflow())
+
+    def testHoldsReadOnlyPermissions(self):
+        workflow = self.workflow()
+        self.assertIn('\npermissions:\n  contents: read\n', workflow)
+        self.assertEqual(workflow.count('\npermissions:'), 1)
+
+    def testRunsOnTheDefaultBranch(self):
+        # This repo's default branch is master, not main (AGENTS.md) -- a
+        # push filter naming main would silently never fire.
+        self.assertIn('branches: [master]', self.workflow())
+
+    def testWatchesGithubDirectoryOnBothTriggers(self):
+        workflow = self.workflow()
+        self.assertEqual(workflow.count("paths: ['.github/**']"), 2)
+
+
 if __name__ == '__main__':
     unittest.main()
 
