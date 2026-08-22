@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
     # `edited` is here because a retarget changes what the PR's diff is
     # measured against while the head — and any `gate` check run already
@@ -24,7 +24,7 @@ jobs:
   # Decides whether the test job may skip: true only when every changed
   # file in the PR is housekeeping (markdown outside templates/, static/,
   # and styles/ — see .github/lanes.conf for the rule; the engine is
-  # mikelward/lanes). Pushes to master are always classified as code.
+  # mikelward/lanes). Pushes to main are always classified as code.
   classify:
     name: Classify the diff
     runs-on: ubuntu-latest
@@ -63,7 +63,7 @@ jobs:
       - name: Test
         run: make test
 
-  # The one check the master ruleset should require. Always runs, always
+  # The one check the main ruleset should require. Always runs, always
   # reports — green only when the test job succeeded, or when it was skipped
   # and the skip is INDEPENDENTLY verified as justified: the gate re-derives
   # the classification itself rather than trusting classify's output. Any

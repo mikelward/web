@@ -64,8 +64,8 @@ the shared `docs/CONSUMER.md`: require `codex` (not `sweep`), require
 date before merging. Deliberately a follow-up — requiring a check in the same
 change that installs it would block the change that installs it.
 
-Note for whoever sets them: the default branch here is `master`, not `main`,
-so the ruleset's target has to say so.
+Note for whoever sets them: the default branch is `main` (renamed from
+`master`), so the ruleset targets `main`.
 
 ## Require zizmor in the ruleset
 

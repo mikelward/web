@@ -207,9 +207,18 @@ class ZizmorWorkflowTest(unittest.TestCase):
         self.assertEqual(workflow.count('\npermissions:'), 1)
 
     def testRunsOnTheDefaultBranch(self):
-        # This repo's default branch is master, not main (AGENTS.md) -- a
-        # push filter naming main would silently never fire.
-        self.assertIn('branches: [master]', self.workflow())
+        # This repo's default branch is main (renamed from master) -- a
+        # push filter naming a branch that no longer exists never fires.
+        self.assertIn('branches: [main]', self.workflow())
+
+    def testCiAlsoRunsOnTheDefaultBranch(self):
+        # ci.yml carried the same stale master push filter and silently
+        # lost default-branch CI for the same reason; assert its trigger
+        # too, or a revert there passes every test unnoticed.
+        with open('.github/workflows/ci.yml') as f:
+            ci = f.read()
+        self.assertIn('branches: [main]', ci)
+        self.assertNotIn('branches: [master]', ci)
 
     def testHasNoPathsFilter(self):
         # A workflow filtered by paths creates NO check run at all on a

@@ -9,8 +9,8 @@ A small Python web app (Werkzeug + Jinja2) deployed on Google App Engine.
 `main.py` is the entry point, `lib.py` holds the helpers, templates live in
 `templates/` and assets in `static/` and `styles/`.
 
-The default branch here is **`master`**, not `main` — substitute it wherever
-these conventions mention a base branch.
+The default branch is `main`. (It was renamed from `master`; the workflows'
+push triggers pointed at `master` for a while after and never fired.)
 
 ## Commands
 
@@ -81,25 +81,25 @@ make deploy   # gcloud app deploy
   instead of switching branches in place, so work in progress on one branch
   isn't disturbed by work on another.
 - **These rules assume an `origin` remote.** Without one you can't fetch,
-  branch from `origin/master`, push, or open a PR — say so and stop rather than
+  branch from `origin/main`, push, or open a PR — say so and stop rather than
   improvising a local substitute.
 - **Branch naming.** Feature branches are prefixed with the agent's own short
   name: `<agent>/<short-topic>` (`claude/...` for Claude Code, `codex/...`
   for Codex, and so on). The placeholder `<agent>` stands in for whichever
   prefix you use — don't hard-code `claude/` unless you *are* Claude Code.
-- **Workflow.** `<agent>/<short-topic>` branch off `origin/master` → PR →
+- **Workflow.** `<agent>/<short-topic>` branch off `origin/main` → PR →
   merge. One topic per branch. Follow-up work after a merge goes on a new
-  branch. Never commit to `master`.
+  branch. Never commit to `main`.
 - **One commit per logical change.** Rewrite unmerged commits freely — amend,
   `git commit --fixup` + autosquash, squash, reorder, split — so each commit
   that lands is one coherent change, with fix-ups and review responses folded
   into the commit they belong to. `wip` / `address review` churn doesn't
-  survive into `master`.
+  survive into `main`.
 - `git push --force-with-lease` to your own live feature branch after a rebase
   is routine hygiene — don't ask. Never a bare `--force`.
 - **Merge cue (`merged` / `I merged` / `landed` / merge webhook) runs hygiene
   *before* engaging with the rest of the message:** `git fetch origin`, cut a
-  fresh `<agent>/<short-topic>` branch off `origin/master`, announce the
+  fresh `<agent>/<short-topic>` branch off `origin/main`, announce the
   switch.
 - **Unshallow before answering anything that depends on git history depth.**
   The sandbox clones shallow, so `git rev-list --count`, `git log` past the
@@ -164,7 +164,7 @@ make deploy   # gcloud app deploy
   "open a PR only when the user explicitly asks" is already satisfied.
 - **On every push, update the PR title and body** so they describe the full,
   latest state of the branch — not the scope it had when it was opened.
-  Re-read the diff against `origin/master` and patch whatever drifted, then
+  Re-read the diff against `origin/main` and patch whatever drifted, then
   post the PR link in the chat reply for that push, not only at the end of the
   conversation.
 - **"Drive to merge"** is shorthand for the whole loop: open the PR, wait
@@ -174,7 +174,7 @@ make deploy   # gcloud app deploy
 - When a feature has multiple open PRs, list **every** open PR by URL, one per
   line — the "View PR" chip sticks to the first link and hides the rest
   (anthropics/claude-code#46625).
-- End every reply with the open-PR link (or `.../compare/master...<branch>`
+- End every reply with the open-PR link (or `.../compare/main...<branch>`
   until a PR exists). Never link to a closed or merged PR — except when the
   reply *is* post-merge follow-up on that PR, where linking it is correct.
 
