@@ -10,7 +10,7 @@
 # reports "skipped" and satisfies a ruleset), so a required `zizmor` plus a
 # path filter would leave any pull request not touching `.github/**`
 # waiting forever on a check nothing reports. The scan is a free sub-minute
-# job, so it simply runs on every pull request and every push to master.
+# job, so it simply runs on every pull request and every push to main.
 #
 # The version is pinned because a new zizmor release adds audits, so an
 # unpinned run could turn red with no change in this repository. Bump it
@@ -34,7 +34,7 @@
 name: zizmor
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
     types: [opened, synchronize, reopened, edited]
 permissions:
