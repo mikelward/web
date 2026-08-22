@@ -179,12 +179,13 @@ class WorkflowCheckRenameTest(unittest.TestCase):
 
 
 class ZizmorWorkflowTest(unittest.TestCase):
-    """Tests for the advisory zizmor scan, .github/workflows/zizmor.yml.
+    """Tests for the required zizmor scan, .github/workflows/zizmor.yml.
 
-    Advisory means non-blocking by design, so a malformed policy or a broken
-    invocation would otherwise fail silently -- the job stays red forever and
-    nothing else notices, since nothing requires it. Read with plain string
-    matching, not a YAML parser, matching main_test.py's other conventions.
+    Required (once the ruleset lists it -- see TODO.md) means a malformed
+    policy or a broken invocation blocks every merge, so these guard the
+    triggers and the pin as tightly as the workflow's own header explains.
+    Read with plain string matching, not a YAML parser, matching
+    main_test.py's other conventions.
     """
 
     def workflow(self):
@@ -210,9 +211,24 @@ class ZizmorWorkflowTest(unittest.TestCase):
         # push filter naming main would silently never fire.
         self.assertIn('branches: [master]', self.workflow())
 
-    def testWatchesGithubDirectoryOnBothTriggers(self):
-        workflow = self.workflow()
-        self.assertEqual(workflow.count("paths: ['.github/**']"), 2)
+    def testHasNoPathsFilter(self):
+        # A workflow filtered by paths creates NO check run at all on a
+        # non-matching pull request (unlike a skipped job, which reports
+        # "skipped" and satisfies a ruleset) -- fatal once `zizmor` is
+        # required, so the filter must be gone from both triggers. The
+        # header comment still discusses the filter in prose, so match the
+        # actual YAML key rather than a bare substring.
+        self.assertNotIn("paths: ['.github/**']", self.workflow())
+
+    def testPullRequestRunsOnEditedToo(self):
+        # The default `pull_request` type set lacks `edited`: a retarget
+        # regenerates the merge ref against the new base while the head --
+        # and the green check already attached to it -- stays put, so
+        # without `edited` the old target's scan would satisfy the new one
+        # unexamined.
+        self.assertIn(
+            'types: [opened, synchronize, reopened, edited]',
+            self.workflow())
 
 
 if __name__ == '__main__':
