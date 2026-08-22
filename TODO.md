@@ -67,6 +67,16 @@ change that installs it would block the change that installs it.
 Note for whoever sets them: the default branch here is `master`, not `main`,
 so the ruleset's target has to say so.
 
+## Require zizmor in the ruleset
+
+- [ ] Add `zizmor` to the ruleset's required set once it has reported on a
+      pull request after this change: zizmor.yml now runs unfiltered on
+      every PR precisely so it can be required (a paths-filtered workflow
+      creates no check run at all on a non-matching PR, which a ruleset
+      waits on forever) — the posture piloted in mikelward/lanes and
+      mikelward/ci-commit-artifact and rolled out fleet-wide. Fold into the
+      same ruleset change as the other pending settings above.
+
 ## Review and merge gates
 
 - [ ] Add a CI gate (`ci.yml`) running whatever checks this repository
