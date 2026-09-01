@@ -196,7 +196,7 @@ class ZizmorWorkflowTest(unittest.TestCase):
         # An unpinned run takes whatever release is newest, and a new release
         # adds audits -- bumping the pin should be a deliberate edit that
         # re-reads the findings, never a side effect.
-        self.assertIn('pipx run --spec zizmor==1.29.0 zizmor', self.workflow())
+        self.assertIn('pipx run --spec zizmor==1.30.0 zizmor', self.workflow())
 
     def testScansOffline(self):
         self.assertIn(' --offline', self.workflow())
