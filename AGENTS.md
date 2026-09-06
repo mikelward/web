@@ -166,7 +166,7 @@ make deploy   # gcloud app deploy
   commit", "no PR yet"), which holds until the user lifts it. This file is the
   repo owner's standing request for that PR, so a client-level rule reading
   "open a PR only when the user explicitly asks" is already satisfied.
-- **Update the PR title and body with the push, not after it** — same step, so
+- **Update the PR title and body with the push — body first, then push** — so
   they describe the full, latest state of the branch, not the scope it had
   when it was opened. Re-read the diff against `origin/main` and patch
   whatever drifted, then post the PR link in the chat reply for that push, not
