@@ -19,6 +19,7 @@ class Test(unittest.TestCase):
         response = self.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertIn("Mikel's Home Page", response.text)
+        self.assertIn('see the <a href="/software">software</a>', response.text)
         self.assertIn('view my <a href="/resume">resume</a>', response.text)
         self.assertIn('<a href="/contact">contact me</a>', response.text)
 
