@@ -62,6 +62,13 @@ class Test(unittest.TestCase):
             response,
             'https://play.google.com/store/apps/details?id=app.snoozemo',
             'Snoozemo', 'snoozemo')
+        self.assertProjectEntry(
+            response,
+            'https://play.google.com/store/apps/details?id=app.simmo',
+            'Simmo (beta)', 'simmo')
+        self.assertProjectEntry(
+            response, 'https://github.com/mikelward/mesh',
+            'mesh (beta)', 'mesh')
 
     def testSoftware(self):
         response = self.get('/software')
