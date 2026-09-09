@@ -15,6 +15,20 @@ class Test(unittest.TestCase):
         client = Client(main.app, Response)
         return client.get(url)
 
+    def assertProjectEntry(self, response, url, name, repo):
+        """Assert a project's <dt> links to url as its primary link.
+
+        Both /software and /resume render a project as a primary link plus
+        a secondary GitHub one, so pinning the whole <dt> is what catches a
+        primary link mistyped, dropped, or left pointing at the repository
+        after the app itself shipped.
+        """
+        self.assertIn(
+            '<dt><a href="%s">%s</a> '
+            '(<a href="https://github.com/mikelward/%s">GitHub</a>)</dt>'
+            % (url, name, repo),
+            response.text)
+
     def testHome(self):
         response = self.get('/')
         self.assertEqual(response.status_code, 200)
@@ -44,6 +58,19 @@ class Test(unittest.TestCase):
         response = self.get('/resume')
         self.assertEqual(response.status_code, 200)
         self.assertIn("Mikel's Resume", response.text)
+        self.assertProjectEntry(
+            response,
+            'https://play.google.com/store/apps/details?id=app.snoozemo',
+            'Snoozemo', 'snoozemo')
+
+    def testSoftware(self):
+        response = self.get('/software')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Mikel's Software", response.text)
+        self.assertProjectEntry(
+            response,
+            'https://play.google.com/store/apps/details?id=app.snoozemo',
+            'Snoozemo', 'snoozemo')
 
     @unittest.skip('/styles is not served by werkzeug app yet.')
     def testStyles(self):
