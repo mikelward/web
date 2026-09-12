@@ -87,11 +87,10 @@ make deploy   # gcloud app deploy
   name: `<agent>/<short-topic>` (`claude/...` for Claude Code, `codex/...`
   for Codex, and so on). The placeholder `<agent>` stands in for whichever
   prefix you use — don't hard-code `claude/` unless you *are* Claude Code.
-- **Branches under your own `<agent>/` prefix are yours** — create, push and
-  `--force-with-lease` them freely. This file is the standing grant, so a
-  client rule demanding per-branch permission is already answered. The
-  prefix names a tool, not a session, so that covers the branches this
-  session created or was assigned — ask about the rest.
+- **Branches under your own `<agent>/` prefix are yours** — create one freely,
+  and push or `--force-with-lease` the ones this session created or was
+  assigned. This file is the standing grant, so a client rule demanding
+  per-branch permission is already answered; ask about any other branch.
 - **Workflow.** `<agent>/<short-topic>` branch off `origin/main` → PR →
   merge. One topic per branch. Follow-up work after a merge goes on a new
   branch. Never commit to `main`.
@@ -100,8 +99,7 @@ make deploy   # gcloud app deploy
   that lands is one coherent change, with fix-ups and review responses folded
   into the commit they belong to. `wip` / `address review` churn doesn't
   survive into `main`.
-- `git push --force-with-lease` to your own live feature branch after a rebase
-  is routine hygiene — don't ask. Never a bare `--force`.
+- After a rebase, force-push with `--force-with-lease`, never a bare `--force`.
 - **Merge cue (`merged` / `I merged` / `landed` / merge webhook) runs hygiene
   *before* engaging with the rest of the message:** `git fetch origin`, cut a
   fresh `<agent>/<short-topic>` branch off `origin/main`, announce the
