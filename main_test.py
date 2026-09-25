@@ -64,6 +64,10 @@ class Test(unittest.TestCase):
             'Snoozemo (beta)', 'snoozemo')
         self.assertProjectEntry(
             response,
+            'https://play.google.com/store/apps/details?id=app.stopdash',
+            'StopDash (beta)', 'stopdash')
+        self.assertProjectEntry(
+            response,
             'https://play.google.com/store/apps/details?id=app.simmo',
             'Simmo (beta)', 'simmo')
         self.assertProjectEntry(
@@ -78,6 +82,10 @@ class Test(unittest.TestCase):
             response,
             'https://play.google.com/store/apps/details?id=app.snoozemo',
             'Snoozemo (beta)', 'snoozemo')
+        self.assertProjectEntry(
+            response,
+            'https://play.google.com/store/apps/details?id=app.stopdash',
+            'StopDash (beta)', 'stopdash')
 
     @unittest.skip('/styles is not served by werkzeug app yet.')
     def testStyles(self):
