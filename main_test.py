@@ -9,6 +9,14 @@ from werkzeug.wrappers import Response
 import main
 
 
+# Released apps first, then betas, each group alphabetical, with the Android
+# apps kept together ahead of mesh.
+ANDROID_PROJECT_ORDER = [
+    'ClothesCast', 'Type Launcher', 'Simmo (beta)', 'Snoozemo (beta)',
+    'StopDash (beta)', 'mesh (beta)',
+]
+
+
 class Test(unittest.TestCase):
 
     def get(self, url):
@@ -54,10 +62,16 @@ class Test(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.mimetype, 'image/x-icon')
 
+    def assertProjectOrder(self, response, names):
+        """Assert the named projects appear in this order on the page."""
+        positions = [response.text.index('>%s</a>' % name) for name in names]
+        self.assertEqual(positions, sorted(positions))
+
     def testResume(self):
         response = self.get('/resume')
         self.assertEqual(response.status_code, 200)
         self.assertIn("Mikel's Resume", response.text)
+        self.assertProjectOrder(response, ANDROID_PROJECT_ORDER)
         self.assertProjectEntry(
             response,
             'https://play.google.com/store/apps/details?id=app.snoozemo',
@@ -78,6 +92,7 @@ class Test(unittest.TestCase):
         response = self.get('/software')
         self.assertEqual(response.status_code, 200)
         self.assertIn("Mikel's Software", response.text)
+        self.assertProjectOrder(response, ANDROID_PROJECT_ORDER)
         self.assertProjectEntry(
             response,
             'https://play.google.com/store/apps/details?id=app.snoozemo',
