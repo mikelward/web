@@ -23,18 +23,20 @@ class Test(unittest.TestCase):
         client = Client(main.app, Response)
         return client.get(url)
 
-    def assertProjectEntry(self, response, url, name, repo):
+    def assertProjectEntry(self, response, url, name, repo, aka=None):
         """Assert a project's <dt> links to url as its primary link.
 
         Both /software and /resume render a project as a primary link plus
         a secondary GitHub one, so pinning the whole <dt> is what catches a
         primary link mistyped, dropped, or left pointing at the repository
-        after the app itself shipped.
+        after the app itself shipped. aka is the other name the project
+        goes by, shown between the two links.
         """
+        aka_text = 'a.k.a. %s ' % aka if aka else ''
         self.assertIn(
-            '<dt><a href="%s">%s</a> '
+            '<dt><a href="%s">%s</a> %s'
             '(<a href="https://github.com/mikelward/%s">GitHub</a>)</dt>'
-            % (url, name, repo),
+            % (url, name, aka_text, repo),
             response.text)
 
     def testHome(self):
@@ -79,7 +81,7 @@ class Test(unittest.TestCase):
         self.assertProjectEntry(
             response,
             'https://play.google.com/store/apps/details?id=app.stopdash',
-            'StopDash (beta)', 'stopdash')
+            'StopDash (beta)', 'stopdash', aka='LDN Go')
         self.assertProjectEntry(
             response,
             'https://play.google.com/store/apps/details?id=app.simmo',
@@ -100,7 +102,7 @@ class Test(unittest.TestCase):
         self.assertProjectEntry(
             response,
             'https://play.google.com/store/apps/details?id=app.stopdash',
-            'StopDash (beta)', 'stopdash')
+            'StopDash (beta)', 'stopdash', aka='LDN Go')
 
     @unittest.skip('/styles is not served by werkzeug app yet.')
     def testStyles(self):
