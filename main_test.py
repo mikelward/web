@@ -10,10 +10,10 @@ import main
 
 
 # Released apps first, then betas, each group alphabetical, with the Android
-# apps kept together ahead of mesh.
+# apps kept together ahead of mesh and tide.
 ANDROID_PROJECT_ORDER = [
     'ClothesCast', 'Type Launcher', 'Simmo (beta)', 'Snoozemo (beta)',
-    'StopDash (beta)', 'mesh (beta)',
+    'StopDash (beta)', 'mesh (beta)', 'tide (beta)',
 ]
 
 
@@ -89,6 +89,9 @@ class Test(unittest.TestCase):
         self.assertProjectEntry(
             response, 'https://github.com/mikelward/mesh',
             'mesh (beta)', 'mesh')
+        self.assertProjectEntry(
+            response, 'https://github.com/mikelward/tide',
+            'tide (beta)', 'tide')
 
     def testSoftware(self):
         response = self.get('/software')
@@ -103,6 +106,9 @@ class Test(unittest.TestCase):
             response,
             'https://play.google.com/store/apps/details?id=app.stopdash',
             'StopDash (beta)', 'stopdash', aka='LDN Go')
+        self.assertProjectEntry(
+            response, 'https://github.com/mikelward/tide',
+            'tide (beta)', 'tide')
 
     @unittest.skip('/styles is not served by werkzeug app yet.')
     def testStyles(self):
