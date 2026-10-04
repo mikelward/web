@@ -11,8 +11,9 @@ Conventions for AI agents working in this repository.
 `CLAUDE.md` is a symlink to this file, so every agent reads the same
 conventions. Edit `AGENTS.md`. Bump `last_modified` in the front matter whenever you edit it.
 
-**At the start of every session, print the path of the `AGENTS.md` you loaded and its
-`last_modified` date**, so a stale or wrong copy is caught before it steers the work.
+**At the start of every session, print the full absolute path of the `AGENTS.md` you
+loaded and its `last_modified` date**, so a stale or wrong copy is caught before it
+steers the work.
 
 A small Python web app (Werkzeug + Jinja2) deployed on Google App Engine.
 `main.py` is the entry point, `lib.py` holds the helpers, templates live in
