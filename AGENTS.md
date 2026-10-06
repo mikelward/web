@@ -1,7 +1,7 @@
 ---
 trigger: always_on
 alwaysApply: true
-last_modified: 2026-10-04
+last_modified: 2026-10-06
 ---
 
 # AGENTS.md
@@ -332,9 +332,9 @@ make deploy   # gcloud app deploy
   the tip you noted before fetching: the push flags do not reliably refuse a
   rewind, a commit you never fetched, or one you fetched and did not rebase
   onto, and overwriting any of them loses someone's work. If either fails, or
-  you can't tell, stop and ask.** No webhook reports a base
-  advance, so read `mergeable_state` on the scheduled check, not just the
-  checks.
+  you can't tell, stop and ask.** No webhook reports a base advance, so read
+  `mergeable_state` at every scheduled check, PR-event wake and drive step,
+  not just the checks, and act at once, unasked.
 
 ## Cost and reliability
 
