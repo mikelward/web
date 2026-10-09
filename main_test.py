@@ -69,6 +69,15 @@ class Test(unittest.TestCase):
         positions = [response.text.index('>%s</a>' % name) for name in names]
         self.assertEqual(positions, sorted(positions))
 
+    def testResumeCurrentRole(self):
+        response = self.get('/resume')
+        current = response.text.index('2026&mdash;present')
+        previous = response.text.index('2022&mdash;2026')
+        role = response.text[current:previous]
+        self.assertIn(
+            '<a href="http://www.google.com/">Google DeepMind</a>', role)
+        self.assertIn('AI/ML training', role)
+
     def testResume(self):
         response = self.get('/resume')
         self.assertEqual(response.status_code, 200)
