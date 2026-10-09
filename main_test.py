@@ -77,6 +77,8 @@ class Test(unittest.TestCase):
         self.assertIn(
             '<a href="http://www.google.com/">Google DeepMind</a>', role)
         self.assertIn('AI/ML training', role)
+        bullets = re.findall(r'<li>(.*?)</li>', role)
+        self.assertEqual(bullets[1], 'Process automation')
 
     def testResume(self):
         response = self.get('/resume')
