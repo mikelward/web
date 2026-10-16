@@ -317,9 +317,10 @@ make deploy   # gcloud app deploy
     drives one message — the session URL ends its body, where your client
     can message sessions — naming the PR that merged. Send it whatever the
     PR's state reads: right after a merge GitHub can still be computing
-    mergeability, so a PR about to need a rebase can look clean. It prompts
-    a read, not an action: that session's own rules decide the rebase. Skip
-    a PR with no session URL, and don't retry a failed send; its own
+    mergeability, so a PR about to need a rebase can look clean. It is no
+    merge cue for the receiver, whose own PR is still open: it prompts a
+    read, not an action, and the receiver's own rules decide the rebase.
+    Skip a PR with no session URL, and don't retry a failed send; its own
     scheduled check is the fallback.
   - Merged or closed, a review can still land after the fact — so hold the
     watch for one more short check to see CI and Codex report on the final
