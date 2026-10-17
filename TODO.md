@@ -87,3 +87,9 @@ Note for whoever sets them: the default branch is `main` (renamed from
       gates, and auto-merge. A ruleset on the default branch requiring
       the gates, the `codex` status, conversation resolution and
       up-to-date branches, with the auto-merge setting enabled.
+
+## Check AGENTS.md's size in CI
+
+- [ ] Add `test "$(wc -c < AGENTS.md)" -lt 24000` to `ci.yml` on a path the docs lane
+      runs too, so `AGENTS.md` can't silently grow past Antigravity's 24,000-byte
+      per-file rule cap again — the follow-up mikelward/stopdash#932 tracks there.
