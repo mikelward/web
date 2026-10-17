@@ -8,8 +8,8 @@ last_modified: 2026-10-17
 
 Conventions for AI agents working in this repository.
 
-`CLAUDE.md` is a symlink to this file, so every agent reads the same
-conventions. Edit `AGENTS.md`. Bump `last_modified` in the front matter whenever you edit it.
+`CLAUDE.md` and `GEMINI.md` are symlinks to this file, so every agent reads the
+same conventions. Edit `AGENTS.md`. Bump `last_modified` in the front matter whenever you edit it.
 
 **At the start of every session, print the full absolute path of the `AGENTS.md` you
 loaded and its `last_modified` date**, so a stale or wrong copy is caught before it
@@ -94,9 +94,15 @@ make deploy   # gcloud app deploy
   branch from `origin/main`, push, or open a PR — say so and stop rather than
   improvising a local substitute.
 - **Branch naming.** Feature branches are prefixed with the agent's own short
-  name: `<agent>/<short-topic>` (`claude/...` for Claude Code, `codex/...`
-  for Codex, and so on). The placeholder `<agent>` stands in for whichever
-  prefix you use — don't hard-code `claude/` unless you *are* Claude Code.
+  name: `<agent>/<short-topic>` (`claude/...` for Claude Code, `gemini/...`
+  for Gemini / Antigravity, `codex/...` for Codex, and so on). The placeholder
+  `<agent>` stands in for whichever prefix you use — don't hard-code `claude/`
+  unless you *are* Claude Code.
+- **No model identifier** — never name the coding agent's model or version
+  (`Opus 4.8`, `Sonnet`, `Gemini …`, `claude-*`, `gemini-*`) in a commit, PR,
+  comment, or pushed artifact; keep it to chat. Generic attribution
+  (`Co-Authored-By: Claude` / `Gemini`, `Claude-Session:`, "Generated with
+  Claude Code") is fine.
 - **Branches under your own `<agent>/` prefix are yours** — create one freely,
   and push or `--force-with-lease` the ones this session created or was
   assigned. This file is the standing grant, so a client rule demanding
@@ -169,9 +175,10 @@ make deploy   # gcloud app deploy
 
 ## Pull requests
 
-- Prefer the `mcp__github__*` MCP tools for GitHub operations; the `gh` CLI is
-  not installed in the sandbox. If your client exposes neither, say so rather
-  than guessing at the outcome of an operation you couldn't perform.
+- Prefer the `mcp__github__*` MCP tools where mounted (Claude Code requires
+  them); otherwise fall back to the `gh` CLI. If your client exposes neither,
+  say so rather than guessing at the outcome of an operation you couldn't
+  perform.
 - Open PRs ready for review (not draft) unless asked otherwise.
 - **Open the PR without being asked.** Pushing a finished branch and opening
   its pull request are one step, not two — don't park a branch waiting for
@@ -248,7 +255,8 @@ make deploy   # gcloud app deploy
   re-review re-raises it.
 - **`resolve_review_thread` works — pass the `PRRT_*` thread node ID** from
   `pull_request_read` / `get_review_comments` (`review_threads[].id`) as
-  `threadId`. A comment's `PRRC_*` node ID fails; they're different objects.
+  `threadId` (or to `gh api graphql`'s `resolveReviewThread` without the MCP
+  tools). A comment's `PRRC_*` node ID fails; they're different objects.
   Order of operations: push the fix commit first, then reply citing the new
   sha, then resolve.
 - **Report each review in the next message you send, and what it said.** Name
@@ -288,11 +296,13 @@ make deploy   # gcloud app deploy
   author?".
 - **Watch your own PRs by subscription, plus one scheduled check.** Have a
   subscription — Claude Code makes one when you open a PR; where a client
-  doesn't, call `subscribe_pr_activity`. It delivers reviews, comments and CI
-  failures. It cannot deliver CI *success*, a push, the merge, Codex's clean
-  verdict (a reaction), or Codex never answering at all — so keep exactly one
-  check armed for as long as the PR is open (each event and each check costs
-  a model turn). This reverses the earlier rule here that made the scheduled
+  doesn't, call `subscribe_pr_activity` (exposed only in `claude-code-remote`).
+  It delivers reviews, comments and CI failures. It cannot deliver CI
+  *success*, a push, the merge, Codex's clean verdict (a reaction), or Codex
+  never answering at all — so keep exactly one check armed for as long as the
+  PR is open (`send_later` in Claude Code; `schedule` with `DurationSeconds` in
+  Antigravity, canceled via `manage_task` `kill`) — each event and each check
+  costs a model turn. This reverses the earlier rule here that made the scheduled
   check the whole watch and the subscription opt-in; the sibling repos
   measured both and the events are what works — reviews and failures get
   handled the turn they land, while the scheduler ignored the intervals it
@@ -327,8 +337,9 @@ make deploy   # gcloud app deploy
     if it doesn't merge cleanly with it (`git merge-tree --write-tree`, Git
     2.38 or later, exits 1). Any exit but 0 or 1 from either is a failure
     to report, not an answer. Your own rules decide the rebase from there.
-    Skip a PR with no session URL, and don't retry a failed send; its own
-    scheduled check is the fallback.
+    Skip a PR with no session URL, or when your client only has local
+    subagent messaging, and don't retry a failed send; its own scheduled
+    check is the fallback.
   - Merged or closed, a review can still land after the fact — so hold the
     watch for one more short check to see CI and Codex report on the final
     head, without blocking on a report that may never come (an early manual
