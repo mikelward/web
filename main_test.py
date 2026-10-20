@@ -255,6 +255,43 @@ class WorkflowCheckRenameTest(unittest.TestCase):
             'until gate is deleted')
 
 
+class CiConcurrencyTest(unittest.TestCase):
+    """ci.yml's workflow-level concurrency group, pinned. Its failure is
+    silent: a group that cancels the wrong run leaves the required check
+    canceled or missing on a head, and one that cancels nothing doubles every
+    push's runs; neither turns any job red.
+    """
+
+    MAIN = ("(github.event_name == 'push' || (github.event_name == "
+            "'workflow_dispatch' && github.ref == 'refs/heads/main'))")
+
+    def setUp(self):
+        with open('.github/workflows/ci.yml') as f:
+            self.workflow = f.read()
+
+    def testDeclaresOneWorkflowLevelGroup(self):
+        self.assertEqual(self.workflow.count('\nconcurrency:\n'), 1)
+
+    def testGroupsAPullRequestByNumberAndMainByCommit(self):
+        self.assertIn(
+            "\n  group: ci-${{ " + self.MAIN + " && format('main-{0}', "
+            "github.sha) || github.event.pull_request.number || github.ref }}\n",
+            self.workflow)
+
+    def testCancelsOnAPushNeverOnMainOrAnEdit(self):
+        # An `edited` run carries the head as of the edit, and GitHub doesn't
+        # promise to start runs in event order, so a canceling edit could
+        # cancel the only run on a newer head; it queues instead.
+        self.assertIn(
+            "\n  cancel-in-progress: ${{ !" + self.MAIN +
+            " && github.event.action != 'edited' }}\n",
+            self.workflow)
+
+    def testStillRunsOnAnEdit(self):
+        self.assertIn('types: [opened, synchronize, reopened, edited]',
+                      self.workflow)
+
+
 class ZizmorWorkflowTest(unittest.TestCase):
     """Tests for the required zizmor scan, .github/workflows/zizmor.yml.
 
