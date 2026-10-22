@@ -1,7 +1,7 @@
 ---
 trigger: always_on
 alwaysApply: true
-last_modified: 2026-10-17
+last_modified: 2026-10-22
 ---
 
 # AGENTS.md
@@ -176,15 +176,16 @@ identifiers): `color`, `behavior`, `canceled`, `gray`. Third-party API spellings
   review body, most blocking first: claim, location, and what you did or the maintainer's
   options. All of them, ahead of *keep replies short*; ask only the most blocking question.
 - **Read the Codex verdict, don't infer it.** It reacts to the PR body (`issue_read` →
-  reactions), not a thread's `Useful?` bar: `eyes` reading, `+1` clean, revoked on push,
-  so a visible one belongs to the visible head; `+1` with green CI is a merge. Leave body
+  reactions), not a thread's `Useful?` bar: `eyes` reading, `+1` clean, revoked on push, so
+  a visible one belongs to the visible head; `+1` with green CI is a merge. Leave body
   reactions to Codex (the count names no author; a review names the commit it read).
   Findings arrive as review comments, top-level comments or reviews — read all three to the
   last page — and block the merge until fixed, rebutted or deferred; an acknowledgment is
   no answer. A pending `codex` status is findings to address; or a clean review with no
-  reaction or an unanswered rebuttal — poke `@codex review` once, five minutes after it;
-  or nothing at all — poke once, five minutes after the push. Escalate five minutes after
-  a poke rather than poke twice.
+  reaction or an unanswered rebuttal — poke `@codex review` five minutes after it; or a
+  hung review, nothing at all five minutes after the push or stuck at running (👀) ten
+  minutes on — poke. A poke that hangs the same way gets a second an hour later; escalate
+  only if that one hangs too, never after one (maintainer, 2026-10-22).
 - **Once Codex has +1'd a head, make no unnecessary change without asking** (maintainer,
   2026-10-13): a to-do, tidy-up or extra fix waits for a yes or a follow-up PR; a rebase
   for `dirty` (or required `behind`), a red-CI fix, and drive/autopilot where in effect
