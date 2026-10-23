@@ -1,7 +1,7 @@
 ---
 trigger: always_on
 alwaysApply: true
-last_modified: 2026-10-22
+last_modified: 2026-10-23
 ---
 
 # AGENTS.md
@@ -85,6 +85,11 @@ identifiers): `color`, `behavior`, `canceled`, `gray`. Third-party API spellings
 - **One commit per logical change.** Rewrite unmerged commits freely (amend, `--fixup` +
   autosquash, squash, reorder, split) so review fixes fold into their commit with no
   `wip`/`address review` churn. `--force-with-lease` after a rebase, never bare `--force`.
+- **Title commits like a changelog line** (maintainer, 2026-10-23): after any prefix, an
+  imperative verb, then the change as a visitor to the site sees it, plain English,
+  sentence case, ≤ ~70 chars, e.g. `Fix …` for what was broken, `Improve …` for what got
+  better, `Add …` for what's new; an optional parenthetical says how. Never the scenario
+  or the mechanism (that's the body). PR titles match.
 - **Merge cue (`merged` / `I merged` / `landed` / merge webhook) runs hygiene first:**
   `git fetch origin +refs/heads/main:refs/remotes/origin/main` (a bare fetch leaves a
   single-branch `origin/main` stale), cut a fresh `<agent>/<short-topic>` off
