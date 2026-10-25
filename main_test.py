@@ -10,10 +10,10 @@ import main
 
 
 # Released apps first, then betas, each group alphabetical, with the Android
-# apps kept together ahead of mesh and tide.
+# apps kept together ahead of mesh, tide and tico.
 ANDROID_PROJECT_ORDER = [
     'ClothesCast', 'Type Launcher', 'Simmo (beta)', 'Snoozemo (beta)',
-    'StopDash (beta)', 'mesh (beta)', 'tide (beta)',
+    'StopDash (beta)', 'mesh (beta)', 'tide (beta)', 'tico (beta)',
 ]
 
 
@@ -103,6 +103,13 @@ class Test(unittest.TestCase):
         self.assertProjectEntry(
             response, 'https://github.com/mikelward/tide',
             'tide (beta)', 'tide')
+        self.assertProjectEntry(
+            response,
+            'https://chromewebstore.google.com/detail/'
+            'ajcfbfgjfglgofbepnkiimmmnaidfedl',
+            'tico (beta)', 'tico')
+        self.assertIn(
+            'A tiling window manager and launcher for chromeOS', response.text)
 
     def testSoftware(self):
         response = self.get('/software')
@@ -120,6 +127,13 @@ class Test(unittest.TestCase):
         self.assertProjectEntry(
             response, 'https://github.com/mikelward/tide',
             'tide (beta)', 'tide')
+        self.assertProjectEntry(
+            response,
+            'https://chromewebstore.google.com/detail/'
+            'ajcfbfgjfglgofbepnkiimmmnaidfedl',
+            'tico (beta)', 'tico')
+        self.assertIn(
+            'A tiling window manager and launcher for chromeOS', response.text)
 
     @unittest.skip('/styles is not served by werkzeug app yet.')
     def testStyles(self):
