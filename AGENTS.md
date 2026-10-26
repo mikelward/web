@@ -1,7 +1,7 @@
 ---
 trigger: always_on
 alwaysApply: true
-last_modified: 2026-10-25
+last_modified: 2026-10-26
 ---
 
 # AGENTS.md
@@ -17,7 +17,7 @@ point, `lib.py` the helpers, `templates/` the templates, `static/` and `styles/`
 assets. The default branch is `main` (renamed from `master`, so a trigger still naming
 `master` never fires).
 
-Keep this file short — one-liners over essays, **under 24,000 bytes** (`wc -c AGENTS.md`):
+Keep this file short — one-liners over essays, **under 22,000 bytes** (`wc -c AGENTS.md`):
 Antigravity caps rule files at 24 KB and silently truncates the tail. State the rule and
 the failure it prevents; incident narratives belong in commits. Add a rule the first time
 something bites, rewrite/trim rather than append, and delete rules that stopped biting.
