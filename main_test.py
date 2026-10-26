@@ -10,10 +10,11 @@ import main
 
 
 # Released apps first, then betas, each group alphabetical, with the Android
-# apps kept together ahead of mesh, tide and tileco.
+# apps kept together ahead of mesh, tide, tileco and tilemo.
 ANDROID_PROJECT_ORDER = [
     'ClothesCast', 'Type Launcher', 'Simmo (beta)', 'Snoozemo (beta)',
     'StopDash (beta)', 'mesh (beta)', 'tide (beta)', 'tileco (beta)',
+    'tilemo (beta)',
 ]
 
 
@@ -110,6 +111,11 @@ class Test(unittest.TestCase):
             'tileco (beta)', 'tileco')
         self.assertIn(
             'A tiling window manager and launcher for chromeOS', response.text)
+        self.assertProjectEntry(
+            response, 'https://github.com/mikelward/tilemo',
+            'tilemo (beta)', 'tilemo')
+        self.assertIn(
+            'A tiling window manager and launcher for macOS', response.text)
 
     def testSoftware(self):
         response = self.get('/software')
@@ -134,6 +140,11 @@ class Test(unittest.TestCase):
             'tileco (beta)', 'tileco')
         self.assertIn(
             'A tiling window manager and launcher for chromeOS', response.text)
+        self.assertProjectEntry(
+            response, 'https://github.com/mikelward/tilemo',
+            'tilemo (beta)', 'tilemo')
+        self.assertIn(
+            'A tiling window manager and launcher for macOS', response.text)
 
     @unittest.skip('/styles is not served by werkzeug app yet.')
     def testStyles(self):
