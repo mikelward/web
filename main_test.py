@@ -110,12 +110,14 @@ class Test(unittest.TestCase):
             'ajcfbfgjfglgofbepnkiimmmnaidfedl',
             'tileco (beta)', 'tileco')
         self.assertIn(
-            'A tiling window manager and launcher for chromeOS', response.text)
+            'Tiling window manager and launcher/switcher/dashboard for chromeOS',
+            response.text)
         self.assertProjectEntry(
             response, 'https://github.com/mikelward/tilemo',
             'tilemo (beta)', 'tilemo')
         self.assertIn(
-            'A tiling window manager and launcher for macOS', response.text)
+            'Tiling window manager and launcher/switcher/dashboard for macOS',
+            response.text)
 
     def testSoftware(self):
         response = self.get('/software')
@@ -139,12 +141,14 @@ class Test(unittest.TestCase):
             'ajcfbfgjfglgofbepnkiimmmnaidfedl',
             'tileco (beta)', 'tileco')
         self.assertIn(
-            'A tiling window manager and launcher for chromeOS', response.text)
+            'Tiling window manager and launcher/switcher/dashboard for chromeOS',
+            response.text)
         self.assertProjectEntry(
             response, 'https://github.com/mikelward/tilemo',
             'tilemo (beta)', 'tilemo')
         self.assertIn(
-            'A tiling window manager and launcher for macOS', response.text)
+            'Tiling window manager and launcher/switcher/dashboard for macOS',
+            response.text)
 
     @unittest.skip('/styles is not served by werkzeug app yet.')
     def testStyles(self):
