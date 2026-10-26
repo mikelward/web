@@ -10,10 +10,10 @@ import main
 
 
 # Released apps first, then betas, each group alphabetical, with the Android
-# apps kept together ahead of mesh, tide and tico.
+# apps kept together ahead of mesh, tide and tileco.
 ANDROID_PROJECT_ORDER = [
     'ClothesCast', 'Type Launcher', 'Simmo (beta)', 'Snoozemo (beta)',
-    'StopDash (beta)', 'mesh (beta)', 'tide (beta)', 'tico (beta)',
+    'StopDash (beta)', 'mesh (beta)', 'tide (beta)', 'tileco (beta)',
 ]
 
 
@@ -107,7 +107,7 @@ class Test(unittest.TestCase):
             response,
             'https://chromewebstore.google.com/detail/'
             'ajcfbfgjfglgofbepnkiimmmnaidfedl',
-            'tico (beta)', 'tico')
+            'tileco (beta)', 'tileco')
         self.assertIn(
             'A tiling window manager and launcher for chromeOS', response.text)
 
@@ -131,7 +131,7 @@ class Test(unittest.TestCase):
             response,
             'https://chromewebstore.google.com/detail/'
             'ajcfbfgjfglgofbepnkiimmmnaidfedl',
-            'tico (beta)', 'tico')
+            'tileco (beta)', 'tileco')
         self.assertIn(
             'A tiling window manager and launcher for chromeOS', response.text)
 
