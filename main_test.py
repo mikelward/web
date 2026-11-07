@@ -10,11 +10,11 @@ import main
 
 
 # Released apps first, then betas, each group alphabetical, with the Android
-# apps kept together ahead of mesh, tide, tileco and tilemo.
+# apps kept together ahead of mesh and tide for Chrome, Linux and macOS.
 ANDROID_PROJECT_ORDER = [
     'ClothesCast', 'Type Launcher', 'Simmo (beta)', 'Snoozemo (beta)',
-    'StopDash (beta)', 'mesh (beta)', 'tide (beta)', 'tileco (beta)',
-    'tilemo (beta)',
+    'StopDash (beta)', 'mesh (beta)', 'tide for Chrome (beta)',
+    'tide for Linux (beta)', 'tide for macOS (beta)',
 ]
 
 
@@ -103,18 +103,18 @@ class Test(unittest.TestCase):
             'mesh (beta)', 'mesh')
         self.assertProjectEntry(
             response, 'https://github.com/mikelward/tide',
-            'tide (beta)', 'tide')
+            'tide for Linux (beta)', 'tide')
         self.assertProjectEntry(
             response,
             'https://chromewebstore.google.com/detail/'
             'ajcfbfgjfglgofbepnkiimmmnaidfedl',
-            'tileco (beta)', 'tileco')
+            'tide for Chrome (beta)', 'tideco')
         self.assertIn(
             'Tiling window manager and launcher/switcher/dashboard for chromeOS',
             response.text)
         self.assertProjectEntry(
-            response, 'https://github.com/mikelward/tilemo',
-            'tilemo (beta)', 'tilemo')
+            response, 'https://github.com/mikelward/tidemo',
+            'tide for macOS (beta)', 'tidemo')
         self.assertIn(
             'Tiling window manager and launcher/switcher/dashboard for macOS',
             response.text)
@@ -134,18 +134,18 @@ class Test(unittest.TestCase):
             'StopDash (beta)', 'stopdash', aka='LDN Go')
         self.assertProjectEntry(
             response, 'https://github.com/mikelward/tide',
-            'tide (beta)', 'tide')
+            'tide for Linux (beta)', 'tide')
         self.assertProjectEntry(
             response,
             'https://chromewebstore.google.com/detail/'
             'ajcfbfgjfglgofbepnkiimmmnaidfedl',
-            'tileco (beta)', 'tileco')
+            'tide for Chrome (beta)', 'tideco')
         self.assertIn(
             'Tiling window manager and launcher/switcher/dashboard for chromeOS',
             response.text)
         self.assertProjectEntry(
-            response, 'https://github.com/mikelward/tilemo',
-            'tilemo (beta)', 'tilemo')
+            response, 'https://github.com/mikelward/tidemo',
+            'tide for macOS (beta)', 'tidemo')
         self.assertIn(
             'Tiling window manager and launcher/switcher/dashboard for macOS',
             response.text)
