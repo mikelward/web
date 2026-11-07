@@ -13,7 +13,7 @@ import main
 # apps kept together ahead of mesh and tide for Chrome, Linux and macOS.
 ANDROID_PROJECT_ORDER = [
     'ClothesCast', 'Type Launcher', 'Simmo (beta)', 'Snoozemo (beta)',
-    'StopDash (beta)', 'mesh (beta)', 'tide for Chrome (beta)',
+    'StopDash (private beta)', 'mesh (beta)', 'tide for Chrome (beta)',
     'tide for Linux (beta)', 'tide for macOS (beta)',
 ]
 
@@ -93,7 +93,7 @@ class Test(unittest.TestCase):
         self.assertProjectEntry(
             response,
             'https://play.google.com/store/apps/details?id=app.stopdash',
-            'StopDash (beta)', 'stopdash', aka='LDN Go')
+            'StopDash (private beta)', 'stopdash', aka='LDN Go')
         self.assertProjectEntry(
             response,
             'https://play.google.com/store/apps/details?id=app.simmo',
@@ -131,7 +131,7 @@ class Test(unittest.TestCase):
         self.assertProjectEntry(
             response,
             'https://play.google.com/store/apps/details?id=app.stopdash',
-            'StopDash (beta)', 'stopdash', aka='LDN Go')
+            'StopDash (private beta)', 'stopdash', aka='LDN Go')
         self.assertProjectEntry(
             response, 'https://github.com/mikelward/tide',
             'tide for Linux (beta)', 'tide')
