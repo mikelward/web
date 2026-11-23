@@ -87,6 +87,11 @@ class Test(unittest.TestCase):
         self.assertIn("Mikel's Resume", response.text)
         self.assertProjectOrder(response, ANDROID_PROJECT_ORDER)
         self.assertProjectEntry(
+            response, 'https://travelmo.app',
+            'travelmo.app (private beta)', 'travelmo')
+        self.assertProjectOrder(
+            response, ['gedmap.com', 'travelmo.app (private beta)', 'ClothesCast'])
+        self.assertProjectEntry(
             response,
             'https://play.google.com/store/apps/details?id=app.snoozemo',
             'Snoozemo (beta)', 'snoozemo')
@@ -124,6 +129,11 @@ class Test(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("Mikel's Software", response.text)
         self.assertProjectOrder(response, ANDROID_PROJECT_ORDER)
+        self.assertProjectEntry(
+            response, 'https://travelmo.app',
+            'travelmo.app (private beta)', 'travelmo')
+        self.assertProjectOrder(
+            response, ['gedmap.com', 'travelmo.app (private beta)', 'ClothesCast'])
         self.assertProjectEntry(
             response,
             'https://play.google.com/store/apps/details?id=app.snoozemo',
