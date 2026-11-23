@@ -1,4 +1,5 @@
 import re
+import subprocess
 import unittest
 
 import lib
@@ -292,6 +293,19 @@ class WorkflowCheckRenameTest(unittest.TestCase):
             strip(self.jobBlock('gate')), strip(self.jobBlock('lanes')),
             'the gate and lanes jobs have drifted -- keep them identical '
             'until gate is deleted')
+
+
+class MakefileTest(unittest.TestCase):
+
+    def testDeploysToTheWebsiteProject(self):
+        # Without --project, gcloud deploys to whatever project is its
+        # current default, and offers to create an App Engine app there.
+        # -n prints the recipe without running it, so nothing deploys.
+        recipe = subprocess.run(
+            ['make', '--no-print-directory', '-n', 'deploy'], capture_output=True, text=True,
+            check=True).stdout
+        self.assertEqual(recipe,
+                         'gcloud app deploy --project=mikelwarddotcom\n')
 
 
 class CiConcurrencyTest(unittest.TestCase):
