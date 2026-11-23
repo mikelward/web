@@ -1,7 +1,7 @@
 ---
 trigger: always_on
 alwaysApply: true
-last_modified: 2026-11-12
+last_modified: 2026-11-23
 ---
 
 # web
@@ -123,5 +123,5 @@ Shared by every mikelward repo and the user-level agent config; canonical in mik
   never run it unasked.
 - **Tests**. `make test` after any change, docs included.
 - **Stack**. Thin: few dependencies.
-- **Private**. GCP project ids, service-account keys, visitor logs and IPs.
+- **Private**. Service-account keys, visitor logs and IPs.
 - **Cost**. App Engine's free tier is the baseline: flag anything that leaves it.

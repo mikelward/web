@@ -8,4 +8,4 @@ test:
 	python3 main_test.py
 
 deploy:
-	gcloud app deploy
+	gcloud app deploy --project=mikelwarddotcom
